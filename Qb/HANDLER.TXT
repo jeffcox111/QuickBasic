@@ -1,0 +1,49 @@
+
+
+                            ****ErrorHANDLER****
+                                version  1.0
+                               by Matt Rooney
+                                  (MattR13)
+
+        ErrorHANDLER is a QBasic Program Designed to help your programs cope
+  with errors created by your program especially when you prompt for filenames 
+  or directories and the files cant be found, also it handles Device problems, 
+  printer errors,I/O errors, and program errors in fact, ErrorHANDLER is desi-
+  gned to cope with any QBasic error that it can create.
+
+        If you like ErrorHANDLER send 5.00,your address, and AOL username to 
+                                
+                                Matt Rooney
+                                873 Sapphire Ln.
+                                Anaheim Hills CA 92807
+
+        When you send the 5.00 you will recieve ErrorHANDLER v2.0 free
+
+
+                          *******Installation*******
+        ErrorHANDLER *CANNOT* be run alone, it must be used as a subprogram                                 
+  in your programs along with some commands at the beginning of your programs       
+  to install first create a SUB called "ErrorHANDLER" then type this at 
+  the beginning of your program: 
+
+  ---------------------------------------------------------------------------
+  DECLARE SUB ErrorHANDLER ()
+  ON ERROR GOTO HANDLER
+  RESUME (wherever you want the program to continue after the error)
+  (note: between ON ERROR and HANDLER: is where your program should start 
+  like "CALL" or "PRINT" etc.) 
+  
+  HANDLER:
+  CALL ErrorHANDLER
+  ---------------------------------------------------------------------------  
+  Then you shuld copy ErrorHANDLER into the ErrorHANDLER SUB 
+  
+  Whenever you run your program now it will call ErrorHANDLER instead of 
+  ending your program
+  (you have to do this to evry program you want it in)
+
+                               ****Thank You****
+  
+
+
+

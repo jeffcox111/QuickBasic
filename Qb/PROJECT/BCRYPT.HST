@@ -1,0 +1,49 @@
+-------------------------------------
+BCRYPT VERSION 1.10
+-------------------------------------
+
+-------------------------------------
+BCRYPT History and Future.
+-------------------------------------
+
+-------------------------------------
+BCRYPT Future Plans
+-------------------------------------
+
+-  Implementation of 'complete' routines.  That is, routines that are
+   handed a filename, a key, and a text string.  The routine will
+   handle all file operations in addition to encryption functions.
+
+-  Addition of cryptographic 'engines'.  These are complete
+   cryptographic functions in LIB/OBJ format ready for inclusion in a
+   program.
+
+-  Addition of file handling routines.
+
+-  Inclusion of additional documentation on cryptographic security.
+
+-  Inclusion of advanced encryption/decryption functions.
+
+-  Porting as much of BCRYPT to ASM as is practicable.
+
+-  Replacment of the MID$ and IN$ functions with direct memory
+   manipulation.
+
+-------------------------------------
+BCRYPT History.
+-------------------------------------
+- V1.10             12 May 1993
+        - Added Power Basic 3.00 Version
+- V1.00             01 February 1993
+        - First public release
+- V1.00 Beta 1.02   Not Released
+        - Corrected and extended documentation
+- V1.00 Beta 1.01   08 August 1992
+        - Minor bugfixes
+- V1.00  Beta 1.00  01 August 1992
+        - First Beta of V1.00
+
+-------------------------------------
+END
+-------------------------------------
+

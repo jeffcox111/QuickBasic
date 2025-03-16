@@ -1,0 +1,427 @@
+
+        ÂÂÄ¿  ÚÂÄÄ¿ ÂÂÄÄ¿ Â  ÂÂ ÂÂÄÄ¿ ÚÄÂÂÄ¿
+        ³ÃÄÁ¿ ³³    ³ÃÄÂÙ ÀÄÄ´³ ³ÃÄÄÙ   ³³
+        ÁÁÄÄÙ ÀÁÄÄÙ ÁÁ ÁÄ ÀÄÄÁÙ ÁÁ      ÁÁ
+
+        |
+        |   Quick Basic Encryption/Decryption Library
+        |   and Cryptosystems.
+        |
+        |   Version 1.10
+        |   12 May 1993
+        |
+        |   Copyright 1993, Mountain Bay Software,
+        |                   J. Derek Lyons
+        |
+
+        --------- WARNING ---------
+        It may violate US Customs Regulations to export this
+        document, program files, or programs using elements of
+        this system.
+        It is the responsibility of the end user to determine
+        the legality or illegality of any use or export, the
+        Author(s) take no responsibility for such actions.
+        --------- WARNING ---------
+
+        Mountain Bay Software makes no warranty of any kind, either
+        express or implied, including but not limited to implied
+        warranties of merchantability and fitness for a particular
+        purpose, with respect to this system and accompanying
+        documentation.
+
+        IN NO EVENT SHALL MOUNTAIN BAY SOFTWARE BE LIABLE FOR
+        ANY DAMAGES (INCLUDING DAMAGES FOR LOSS OF PROFITS, LOSS OF
+        INFORMATION, OR OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF
+        OR INABILITY TO USE THIS SYSTEM.
+
+        Mountain Bay Software specifically does not guarantee that
+        any additional security will be gained from using these
+        routines.  Full security depends on far more then just an
+        encryption system.
+
+
+
+        Contacting the Author;
+        I can be contacted via the following methods;  Use the one
+most convenient for you:
+
+        US MAIL:          Mountain Bay Software
+                          Derek Lyons
+                          2300 Winfield #4
+                          Bremerton, WA
+                                   98310
+                          1-206-479-6123
+        INTERNET:         elde@aol.com
+        America Online:   ELDE
+        RIME Conferences: QuickBasic, Programming, Shareware.
+                          (R/O to TSCNET)
+        FIDO conferences: Quick Basic,BASIC7
+        Intellec:         Programming, Shareware, Power Basic
+        Support BBS:      TSCNET 1-206-692-2388, Conference #11
+
+
+
+Introduction:
+        This package is intended to provide access to cryptographic
+functions for Quick Basic, PDS BASIC and Power Basic programmers.
+BCRYPT.LIB is primarily designed to allow for the encryption of game
+save files, journals, passwords, registration information, etc.
+However it is possible to implement a complete cryptosystem using
+the core routines.
+
+Memory considerations:
+        Routines contained in this library are operating on strings.
+This means that they will consume memory in the string area.
+Therefore be careful about passing extremely long strings into the
+routines.
+
+        Since in most cases at least one copy of the string will be
+made in the routine, it is easy to eat memory up quick.  A combination
+of a long string and a long key could cause the program to crash.  If
+you must encrypt an extremely long string, I reccomend you use a
+routine that generates the key as it goes, or split the string into
+smaller portions and encrypt each one seperately.
+
+        Mathematical functions within the routines all operate on
+integers, all variables are explicitly defined as integers.
+
+Security considerations:
+        Using this system alone will not guarantee beyond minimal
+security.
+
+Design philosophy:
+        Each routine provided in the BCRYPT.LIB is a 'primitive'.
+That is to say, the routine is designed to operate at the lowest
+possible level.  They are meant to provide a building blocks for
+more complex functions.
+
+
+
+The routines in the library are broken up into the following
+functional groups;
+
+Password or Key creation;
+        Argen% (Rseed$)
+        MakeAlpha$
+        MakeAlphaArray (A$())
+        MakeAlphaNum$
+        MakeAlphaNumArray (A$())
+        MakeLong$
+        MakeLongArray (A%())
+        MakePass (tf%, lf%, pass$)
+        MKAlpha$ (Keyval$)
+        MKAlphaNum$ (Keyval$)
+        MKLong$ (Keyval$)
+        Mskey (Ostrg$, strln%, sbv%, ssv%)
+String handling routines;
+        Reverse (Istrg$, Ostrg$)
+        Rol (Istrg$, Ostrg$)
+        Ror (Istrg$, Ostrg$)
+        Scramble$ (istrg$, keyVal$, Scrambleflag%)
+XOR Encryption functions;
+        XorKey (Istrg$, Ostrg$, ckey$)
+        XorRkn (Istrg$, Ostrg$, strt%, stp%)
+        XorRks (Istrg$, Ostrg$, kst$, kpos%)
+        XorSingle (Strg$, NewStrg$, ckey%)
+        XorString (Istrg$, Ostrg$, ckey%)
+CRC Calculation;
+        CRC32& (X$) *
+Compression;
+        LZ.Compress (A$, B$, Bytes.Out%) *
+        LZ.Decompress (A$, B$, Bytes.Out%) *
+
+*       Not Available in Power Basic version
+
+
+   FUNCTION Argen% (Rseed$)
+     '   Rseed$ = 8 character string
+
+     Argen generates a random number in the range 0-255.  Rseed$
+serves to initialize the generator.  To save on memory, Argen writes
+it's internal values back to Rseed$.  Therefore do *not* modify
+Rseed$, or else the output of the generator will change.  The only
+time I recommend modifying Rseed$ is between encryption sessions
+within a single run of the program.
+
+     It is best to run thru the generator a number of times when
+initialized to provide for maximum randomization.  Something similiar
+to the following should suffice;
+
+        Rseed$="123345678"
+        FOR x= 1 TO 100:Junk%=Argen%(Rseed$):NEXT
+
+     Either MSkey or MakePass can also be used for creating input
+strings for Argen%.  Caution should be used if MakePass is used, see
+the description of MakePass for more information.
+
+   FUNCTION CRC32& (X$)
+     '   X$    =   String to calculate 32 bit CRC on
+
+        * Not Available in Power Basic
+
+     Calculates a 32 bit CRC for X$
+
+
+   FUNCTION LZ.Compress (A$, B$, Bytes.Out%)
+   FUNCTION LZ.Decompress (A$, B$, Bytes.Out%)
+     '   A$         =   Input String (String to compress)
+     '   B$         =   Output String
+     '   Bytes.Out% = Parameter used to trim output string
+
+        *  Not Available in Power Basic
+
+     These functions compress the input string (A$) using an LZ
+derived algorythm.
+
+     When calling these routines, B$ cannot be null.  Therefore use
+something like the following to generate B$ prior to calling:
+
+        B$=STRING$(LEN(A$)+100, 0)
+
+     To trim the output to the proper length, use:
+
+        B$=LEFT$(B$, Bytes.Out%)
+
+     Both functions return a True <-1> if succesful and a False <0> if
+not.
+
+     The LZ.x routines are courtesy of Rick Geldriech from the FIDO
+QUICK_BAS echo.  Thanks are due for the amount of time he spent
+assisting me in developing and debugging the PDS version and modifying
+the routines for stand-alone operation.
+
+
+<NOTE: For all MK___$ functions:  Dupe checking on Keyval$ is not
+performed.  Therefore something like Keyval$="DUMMY" will produce an
+incorrect output string>
+
+
+   FUNCTION MKAlpha$ (Keyval$)
+     '   Keyval$ = Key Value
+
+     This function generates a key string suitable for use as input to
+a substitution system.
+
+     It takes Keyval$, creates a string with Keyval$ as the first
+characters, then the remainder of the upper case alphabet skipping the
+characters in Keyval$.
+
+     Example:
+     Calling MKAlpha$ with Keyval$="DUMB" will produce the following
+ouput:
+
+    DUMBACEFGHIJKLNOPQRSTVWXYZ
+
+   FUNCTION MKAlphaNum$ (Keyval$)
+     '   Keyval$ = Key Value
+
+   This function operates similiar to MKAlpha$ except that it accepts
+and outputs the uppercase alphabet and the digits 0-9.
+
+   FUNCTION MKLong$ (Keyval$)
+     '   Keyval$ = Key Value
+
+   This function operates similiar to MKAlpha$ except that it accepts
+and outputs the entire ASCII character set, (0-255).
+
+   FUNCTION MakeAlpha$
+
+     Creates a string that has all the uppercase alphabetic characters.
+
+   SUB MakeAlphaArray (A$())
+     '   A$()  = String array dimensioned to at least 26
+
+     Creates a basic ASCII string array using the capital letters
+
+     A$() must be DIMed to 26 or greater.  The first character is
+located at A$(1).
+
+   FUNCTION MakeAlphaNum$
+
+     Creates a string that has all the uppercase alphabetic characters
+followed by the digits 0-9
+
+   SUB MakeAlphaNumArray (A$())
+     '   A$()  = String array dimensioned to at least 36
+
+     Creates a basic ASCII string array using the capital letters and
+ the numerals 0 to 9
+
+     A$() must be DIMed to 36 or greater.  The first character is
+located at A$(1).
+
+   FUNCTION MakeLong$
+
+     Creates a string holding all 256 ASCII characters (0-255).
+
+   SUB MakeLongArray (A%())
+     '   A%  = Integer array dimensioned to at least 255
+
+     Makes an array of all 255 ASCII characters
+
+     A$() must be DIMed to 255 or greater.  The first character is
+located at A$(0).
+
+   FUNCTION MakePass$ (tf%, lf%, Pass$)
+     '   tf%   =   Type flag
+     '             0 = Alpha
+     '             1 = Numeric
+     '             2 = Alphanumeric
+     '   lf%   =   Length of output string
+     '   Pass$ =   Output string
+
+     MakePass generates a password suitable for use on BBS's, or
+simple encryption keys.  If your keys must be written down or printed
+out, then MakePass is suitable.  If the key material can be stored
+using disk files then Mskey is preferable.
+
+     MakePass uses the internal PC random number generator to create
+the passwords.  Therefore the use of RANDOMIZE TIMER is recommended
+prior to calling this routine.  Be extremely cautious in using the
+output of this routine as the direct input to an encryption or
+decryption routine.  The output of the PC random number generator can
+vary between different machines.  Under normal usage this is not a
+handicap, however in this instance it can cause loss of data.
+
+   FUNCTION MsKey$ (strln%, sbv%, ssv%)
+     '   Makes a simple key string.
+     '   ostrg$ =  Output string (key)
+     '   strln% =  Length of desired output string
+     '   sbv%   =  Starting value for counter (1 to 255)
+     '   ssv%   =  Stepping value for counter (1 to 255)
+
+     MsKey Generates a pseudo-random key based on values provided by
+the programmer (user).  Basically sbv% is stepped by ssv%, then the
+CHR$ of sbv% is added to ostrg$.  This process loops until ostrg$
+reaches the desired length, (strln%).
+
+     Use Mskey instead of MakePass for added security.  Mskey uses all
+256 possible ASCII characters.  Since this can include screen control
+characters, printing to the screen or printer is not recommended.
+
+     For the best possible security using this routine, ssv% should
+not be a multiple of 2, 5, 10, 255, or a even divisor or multiple of
+sbv%.
+
+     This routine only provides minimum security, but is very fast.
+For greater security, a routine using Argen% is prefered.  Using this
+routine for creating input for Argen% will provide a fairly high
+degree of randomness.
+
+
+   FUNCTION Reverse$ (Istrg$)
+     '   Istrg$    =  Input String
+
+     Reverses the order of the original string.  Hence "ABCDEFG"
+becomes "GFEDCBA".
+
+   FUNCTION Rol$ (Istrg$)
+     '  Istrg$     =  Input string
+
+     Performs a left wrapping shift of the original string.  Hence
+"ABCDEFG" becomes "BCDEFGA".
+
+   FUNCTION Ror$ (Istrg$)
+     '  Istrg$     =  Input String
+
+     Performs a right wrapping shift of the original string.  Hence
+"ABCDEFG" becomes "GABCDEF"
+
+
+     FUNCTION Scramble$ (Istrg$, Keyval$, Scrambleflag%)
+     '
+     '  Istrg$        =  String to be scrambled (8 characters)
+     '  Keyval$          =  String to serve as the 'key' for the scramble
+     '                   (1 character)
+     '  Scrambleflag% =  Scramble/unscramble flag
+     '                   0 = scramble
+     '                   1 = scramble
+
+     Scramble as string based on the value of Keyval$.
+
+     <Note:  If Istrg$ is longer then 8 characters, then only the
+first 8 characters will be scrambled, if Keyval$ is longer than 1
+character, only the first character will be used as the key>
+
+
+NOTE:
+1)   For all of the XORxxx routines;  Be careful when modifying any
+key values between calls to the SUB's.  Inadvertent modification will
+scramble the output.  Any modifications made during encryption *MUST*
+be performed during decryption or the output will be scrambled and
+unrecoverable.
+2)   Many of these routines are based on extensive discussion with
+Richard Vannoy on the FIDO QUICK_BAS echo.
+
+   FUNCTION XorKey$ (Istrg$, ckey$)
+     '  Istrg$     =  Input String
+     '  CKey$      =  Value(s) to XOR
+
+     Performs the XOR function on an entire string.
+
+     Rotates thru the entire key, but does not preserve the position
+within the key.
+
+     Useful for one-time encryption of short (under 1k) strings.  Each
+time the routine is called using a different value of lstrg$, and the
+same value of Ckey$, encryption begins again with the first character
+of Ckey$.
+
+   FUNCTION XorRkn$ (Istrg$, strt%, stp%)
+     '  Istrg$     =  Input String
+     '  strt%      =  Starting key value (1-255)
+     '  stp%       =  Value to step key by (1-255)
+
+     Performs the XOR function on an entire string.
+
+     Rotates thru the keyspace (1-255) by stp%, starting at strt%.
+Passes strt% back out of the subroutine.  Thus it steps continuously
+thru key space
+
+     This routine generates a pseudo random key based on strt% and
+stp%.  This key is then used to XOR Istrg$.  The current values of the
+pseudo random generator are maintained in strt% and stp%.  Caution
+should be used in modifying these values.
+
+     For the best possible security using this routine, stp% should
+not be a multiple of 2, 5, 10, 255, or an even divisor of strt%.
+
+   FUNCTION XorRks$ (Istrg$, kst$, kpos%)
+     '  Istrg$     =  Input String
+     '  Ostrg$     =  Output String
+     '  Kst$       =  Value(s) to XOR
+     '  Kpos%      =  current position within the key string
+
+     Performs the XOR function on an entire string.  Operates like
+XorKey, but preserves the key position.
+     
+     Rotates thru the entire key, but does preserve the position within
+the key.
+
+     Used when a large amount of data must be encrypted in small
+chunks.  kpos% is used to store the current pointer into the key.
+
+   FUNCTION XorSingle$ (Istrg$, ckey%)
+     '  Istrg$      =  Input String (of length 1)
+     '  CKey%      =  Value to XOR
+
+     Performs the XOR function on a single character using a single
+character key.
+
+     Useful for fast encryption.  Recommended for use where speed is
+of the essence, but security is not.  Could be used in
+telecommunication if ckey% is rotated by a variable amount at
+pre-arranged times.  Another option is to use XorRkn with an input
+string of length 1.
+
+   FUNCTION XorString (Istrg$, ckey%)
+     '  Istrg$      =  Input String
+     '  CKey%       =  Value to XOR <Range 0-255>
+
+     Performs the XOR function on an entire string
+
+     Uses the same key value for each position in the string
+
+     This routine is reasonably fast and the least secure.
+
+

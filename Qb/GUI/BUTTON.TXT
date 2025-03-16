@@ -1,0 +1,413 @@
+Introduction:
+
+Buttons 3.0 is a Graphical User Interface made for QuickBasic that is
+extreamly easy to use. Most of the interface is transparent to the user
+and programer. There is mouse and non-mouse interfaces that are automaticaly
+selected depending on the users setup at the time of use. The programer has
+transparent accese to 8 objects: Buttons, check boxes, radio buttons, scroll
+bars, picture buttons, text boxes, edit boxes and group boxes.
+
+
+Making a .QLB:
+
+To make Buttons.LIB a quick link library for use in development you must run
+Link.EXE. For example: Link /QU Buttons.Lib, then for the prompt 
+Librarys [.LIB] you would type the drive, path and name of the QuickBasic
+.QLB library (BQlb45.LIB for version 4.5).
+
+
+Function List:
+
+This is a list of all the procedures included in Buttons version 3.0.
+
+	þFirst is a declaration of the procedure.
+	þNext is a description of the procedure.
+	þThen usage information.
+	þAfter that is a description of all the paramaters.
+	þFinaly, any extra comments.
+
+-----------------------------------------------------------------------------
+DECLARE SUB init (n$, doit%)
+	þThis initalizes the library. It auto-detects a mouse, sets the palette 
+	 and sets the mouse cursor to the default cursor.
+
+	þUsage: Manditory after Screen 12 is called and before any other
+	 procedures in this library.
+
+	þn$ - The file name of a specialized map file. If you want the default
+	 map pass null(""). For more information on the .MAP format used see
+	 appendix A.
+	þdoit% - This is a flag that tells weather to print the results of the
+	 mouse auto-detect.
+-----------------------------------------------------------------------------
+DECLARE SUB Disable (id%)
+	þThis procedure makes an object inactive. This prevents a button from
+	 being clicked.
+
+	þUsage: Sometimes. If a button in a group of choises makes others not
+	 matter this turns them off.
+
+	þId% - This is the id number of the object you wish to disable.
+-----------------------------------------------------------------------------
+DECLARE SUB Enable (id%)
+	þEnable makes an object active after being disabled by Disable. This is
+	 the default state of all objects.
+
+	þUsage: Sometimes.
+
+	þId% - The id number of the button to be activated.
+-----------------------------------------------------------------------------
+DECLARE SUB box (x%, y%, w%, h%)
+	þDraws a simple box that has a 3-D rounded look. The border is 10 pixels
+	 wide.
+
+	þUsage: Often. Good for grouping radio buttons.
+	
+	þx% - x position of box
+	 y% - y position of box
+	 w% - Width of box
+	 h% - Height of box
+-----------------------------------------------------------------------------
+DECLARE SUB button (x%, y%, w%, h%, Name$, id%)
+	þDraws the simple raised button that can be clicked.
+
+	þUsage: Often. This is the basic input device.
+
+	þx% - x position of button
+	 y% - y position of button
+	 w% - Width of button
+	 h% - Heigth of button
+	 Name$ - The text name to be displayed on the face of the button.
+	 id% - The id number connected with the button object.
+
+	þIf the width is 0 then the button is automaticaly made to the size of
+	 the name. If height is 0 then the height is made 20 pixels. Buttons
+	 can also be made vertical by making the width not equal to 0 and smaller
+	 than 8*Len(Name$)+20.
+-----------------------------------------------------------------------------
+DECLARE SUB picbutton (x%, y%, w%, h%, finame$, id%)
+	þThis makes an object tied to a BSave file that contains the graphics
+	 information of the button.
+
+	þUsage: Sometimes. The one drawback is the difficulty in making the files.
+
+	þx% - x position of button
+	 y% - y position of button
+	 w% - Width of button
+	 h% - Heigth of button
+	 finame$ - The file name of the graphics to be connected.
+	 id% - The id number connected with the button object.
+
+	þThe file name passed must be seven letters or less. However, on disk it
+	 must the to files represeting the button up and down must end in a
+	 'U.BSV' and 'D.BSV', respectively. Also the width and height must be the
+	 same as when it was saved.
+-----------------------------------------------------------------------------
+DECLARE SUB ScrollBar (x%, y%, w%, h%, low%, hi%, increment%, start%, 
+		linkid%, template$, id%)
+	þThis procedure makes a scroll bar.
+
+	þUsage: Often. Good for making selections from a specified range.
+
+	þx% - x position of scroll bar
+	 y% - y position of scroll bar
+	 w% - Width of scroll bar
+	 h% - Heigth of scroll bar
+	 low% - Number at the low end of the scroll bar.
+	 hi% - Number of the high end of the scroll bar.
+	 increment% - How far to move thumb each time.
+	 start% - Where the thumb should start.
+	 linkid% - The id number of a text box or edit box where the value of the
+		scroll bar is to be put.
+	 template$ - The string to be put in the text box or edit box specified
+		by linkid%.
+	 id% - The id number ot be connected with the scroll bar.
+
+	þIf the scroll bar is vertical the height must be more than 3 times the
+	 width. If it is horizontal then the width must be more than 3 times the
+	 height. If you don't wish to have the number displayed then pass 0 in
+	 linkid%. In template$ a '%%%' denotes where to put the scroll bar value.
+	 One bug that I have found is when the low and high values of the scroll
+	 bar are very far apart and the increment is small the arrows on the sides
+	 leave black line along the bar. This is due to the inacuracy of the
+	 stored numbers.
+-----------------------------------------------------------------------------
+DECLARE SUB check.box (x%, y%, w%, h%, Name$, start%, id%)
+	þMakes a button with a two state check next to it.
+
+	þUsage: Often. Good for yes and no answers.
+
+	þx% - x position of check box
+	 y% - y position of check box
+	 w% - Width of check box
+	 h% - Heigth of check box
+	 Name$ - The text name to be displayed on the face of the button.
+	 start% - The start state of the check box. 1 is checked, 0 is unchecked.
+	 id% - The id number ot be connected with the check box.
+
+	þThe check next to the button is not part of the button. You must make
+	 sure that the check doesn't go off the screen.
+-----------------------------------------------------------------------------
+DECLARE SUB radio.but (x%, y%, w%, h%, Name$, group%, stid%, id%)
+	þMakes a button with a two state check next to it.
+
+	þUsage: Often. Good for answers that can have many different answers,
+		but can only have one answer.
+
+	þx% - x position of radio button
+	 y% - y position of radio button
+	 w% - Width of radio button
+	 h% - Heigth of radio button
+	 Name$ - The text name to be displayed on the face of the button.
+	 group% - The group number that the check box is part of.
+	 stid% - The id of the check box that is checked to start.
+	 id% - The id number ot be connected with the check box.
+	
+	þThe check next to the button is not part of the button. You must make
+	 sure that the check doesn't go off the screen.
+-----------------------------------------------------------------------------
+DECLARE SUB textbox (x%, y%, w%, h%, text$, id%)
+	þMakes a static text box.
+
+	þUsage: Often. Good for displaying text or messages.
+
+	þx% - x position of text box
+	 y% - y position of text box
+	 w% - Width of text box
+	 h% - Heigth of text box
+	 text$ - The text that is put in to start.
+	 id% - The id number ot be connected with the text box.
+-----------------------------------------------------------------------------
+DECLARE SUB editbox (x%, y%, w%, h%, text$, id%)
+	þMakes an edit box for user input.
+
+	þUsage: Often. Good for text input from the user.
+
+	þx% - x position of edit box
+	 y% - y position of edit box
+	 w% - Width of edit box
+	 h% - Heigth of edit box
+	 text$ - The text that is put in to start.
+	 id% - The id number ot be connected with the text box.
+-----------------------------------------------------------------------------
+DECLARE SUB editchange (text$)
+	þPuts text into the active edit box.
+
+	þUsage: Manditory if you use edit boxes.
+
+	þtext$ - The text to be put into the edit box.
+-----------------------------------------------------------------------------
+DECLARE SUB editfocus (id%)
+	þChanges the active edit box.
+
+	þUsage: Rare. Used if you must change the active edit box sometime.
+
+	þid% - The id number of the edit box to make active.
+-----------------------------------------------------------------------------
+DECLARE FUNCTION findAnimate% (x%, y%)
+	þUsed to find which button was clicked on when button is pressed.
+
+	þUsage: Manditory.
+
+	þx% - The x position of the mouse when clicked.
+	 y% - The y position of the mouse when clicked.
+
+	þReturns the id number of the object the mouse was clicked on.
+-----------------------------------------------------------------------------
+DECLARE FUNCTION animate (b%)
+	þUsed to animate a button after the mouse was clicked.
+
+	þUsage: Manditory.
+
+	þb% - The id number of the button that the mouse is over.
+
+	þUse findAnimate% to find the id of the object the mouse is over. Animate
+	 returns 1 if the button was still down when you let go of the button.
+	 When you click the mouse over a button, it gose down. If you move the
+	 mouse off the button then the button pops up and animate returns 0.
+-----------------------------------------------------------------------------
+DECLARE FUNCTION get.State% (id%)
+	þUsed to get the state of an object.
+
+	þUsage: Often. Good for finding out what the input of the user is.
+
+	þid% - Id number of the object to find the state of.
+
+	þNote: Will only work on check boxes, radio buttons and scroll bars.
+-----------------------------------------------------------------------------
+DECLARE SUB setText (id%, text$)
+	þUsed to set the contents of a text box or edit box.
+
+	þUsage: Often. Mostly used on text boxes of that are used as message
+	 boxes.
+
+	þid% - Id number of the text box or edit box to set the contents of.
+	 text$ - The text to put in the text box or edit box.
+-----------------------------------------------------------------------------
+DECLARE SUB textfont (a$, x%, y%, w%, h%, C%, bkg%, Vert%)
+	þUsed to put text on the screen.
+
+	þUsage: Rare. There are better ways. Like text boxes.
+
+	þa$ - The text to display.
+	 x% - The x position of the text.
+	 y% - The y position of the text.
+	 w% - The width of the area to contain the text within.
+	 h% - The height of the area to contain the text within.
+	 C% - The color of the text.
+	 bkg% - The color of the back ground behind the text.
+	 Vert% - Flag to tell it weather the text is vertical or not.
+
+	 þText boxes are a much better way of putting text on the screen because
+	  they are easy to delete.
+-----------------------------------------------------------------------------
+DECLARE FUNCTION Get.Text$ (id%)
+	þUsed to get the contents of a text box or edit box.
+
+	þUsage: Often. Good for finding out what the input of the user is.
+
+	þid% - Id number of the text box or edit box to get the contents of.
+-----------------------------------------------------------------------------
+DECLARE SUB set.state (id%, st%)
+	þUsed to set the state of an object.
+
+	þUsage: Sometimes. Usualy you let the user set the state of an object.
+
+	þid% - The id number of the object to set the state of
+	 st% - The state to set the object to.
+
+	þNote: This only works on check boxes, radio buttons and scroll bars.
+-----------------------------------------------------------------------------
+DECLARE SUB DeleteObject (id%)
+	þUsed to delete any object that is not needed anymore.
+
+	þUsage: Often. (You have to take out the garbage once in a while. :) )
+
+	þid% - The id number of the object to get rid of.
+
+	þIf all the objects are do be deleted then pass -1 for id%.
+-----------------------------------------------------------------------------
+DECLARE FUNCTION moused$ (ax%, bx%, cx%, dx%)
+	þUsed for all mouse and keyboard functions.
+
+	þUsage: Manditory.
+
+	þax% - value of register ax to pass to mouse driver.
+	 bx% - value of register bx to pass to mouse driver.
+	 cx% - value of register cx to pass to mouse driver.
+	 dx% - value of register dx to pass to mouse driver.
+
+	þOnly a few functions acutaly call the mouse driver. I made an emulation
+	 to make it easier for the keyboard support. Moused$ returns any key
+	 pressed during that call. See Appendix B for a list of all mouse
+	 functions supported.
+-----------------------------------------------------------------------------
+DECLARE SUB ChangeMouse (fi$)
+	þUsed to change the shape of the mouse cursor.
+
+	þUsage: Unusable.
+
+	þfi$ - File name of the mouse cursor.
+
+	þNOTE: This procedure DOES NOT work as of this release of Buttons.
+-----------------------------------------------------------------------------
+
+Appendix A:
+
+	This is a complete description of the modified .MAP file I made for this
+library. It is a simple text file that defines all the colors in the palette.
+
+	þFirst there is an optional Bright value. This is used to make the buttons
+	 a different color. The default is 63,63,63. In the file it would look
+	 like this:
+	 
+	 Bright=63,63,63
+
+	 The first number after the = sign is the red value. Next is the green,
+	 then blue.
+
+	þNext is all the colors. First is the color number, then an = sign. Last
+	 is the red, green and blue values.
+
+	The Bright number must come before all the colors that use it, but it can
+	be changed anywhere. If you want the default color for the palette put
+	-1,-1,-1 for the rgb value. Color 1 thru 5 are used for the graying effect
+	of the buttons. Color 5 is white and 1 is dark gray. Color 0, if set to
+	-1,-1,-1, will default to 1/3 of Bright.
+-----------------------------------------------------------------------------
+
+Appendix B:
+
+	This is a list of all the mouse functions supported.
+
+ Function 0 - Mouse driver detect.
+  þInput: ax = 0
+  
+  þOutput: ax = State of mouse driver.
+					 1 if it is installed.
+					 0 if not installed.
+
+ Function 1 - Show mouse cursor.
+  þInput: ax = 1
+
+  þOutput: none.
+
+ Function 2 - Hide mouse cursor.
+  þInput: ax = 2
+
+  þOutput: none.
+
+ Function 3 - Mouse status.
+  þInput: ax = 3
+
+  þOutput: bx = Mouse button status.
+					 bit 1 is set if the left button is down.
+					 bit 2 is set if the right button is down.
+					 bit 3 is set if the middle button is down.
+			  cx = Mouse x position.
+			  dx = Mouse y position.
+
+ Function 4 - Set mouse position.
+  þInput: ax = 4
+			 cx = x position
+			 dx = y position
+
+  þOutput: none.
+
+ Function 7 - Set horizontal mouse range.
+  þInput: ax = 7
+			 cx = Minimum x position.
+			 dx = Maximum x position.
+
+  þOutput: none.
+
+ Function 8 - Set vertical mouse range.
+  þInput: ax = 8
+			 cx = Minimum y position.
+			 dx = Maximum y position.
+
+  þOutput: none.
+
+ Function 11 - Mouse move status.
+  þInput: ax = 11
+  
+  þOutput: cx = Number of pixels mouse has moved toward the right side of
+					 the screen. (Negative if it moved left.)
+			  dx = Number of pixels mouse has moved toward the bottom of the
+					 screen. (Negative if it moved up.)
+
+That is all the functions supported as of this release.
+-----------------------------------------------------------------------------
+
+Distribution:
+
+	I am asking for no payment for the use or distribution of Buttons 3.0.
+All I ask is that it be either be distributed with all files intact as a
+library or with all files needed for running your program.
+
+
+Ending:
+
+	I hope this will be a help in the development of programs that use
+Buttons 3.0. If you have any comments or sugestions please E-Mail me at
+Greg Lee 1 on AOL.

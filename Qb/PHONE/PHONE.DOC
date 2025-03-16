@@ -1,0 +1,152 @@
+                        лллллллллллллллллллллл
+                        лл  Telephone Book  лл
+                        лл       BY:        лл
+                        лл  Tyrant Software лл
+                        лл   Travis Larson  лл
+                        лл     Jeff Cox     лл
+                        лллллллллллллллллллллл
+
+        This is a shareware version fo my telephone program.  I hope you 
+enjoy this.  To recieve a fully fuctional version including the dial command,
+print command, and offers for upgrades and other programs made by Tyrant 
+Software. Here is a manual to guide you through this program.
+
+
+
+
+        Visit our World Wide Web page at "http://home.aol.com/ghost308"
+
+
+
+
+                          Table Of Contents
+
+                        1. Beginnings 
+                        2. Buttons
+                        3. Show Command
+                        4. Load + Save Command
+                        5. Print Command
+                        6. Dial Command
+                        7. Registration
+                        8. Specs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Chapter 1.        Beginnings
+        Upon running our program you will be able to Save and Load peoples
+names, phone numbers, and E-Mail.  With the fully function version you will
+be able to print the phone numbers and dial them.  We will discuss the 
+features in following text.
+
+
+
+
+
+
+
+
+                Chapter 2.        Buttons
+        The Buttons in are program are the following
+  1. Tyrant Software Button -- Displayes the Tyrant logo
+  2. Show Button -- Collects the information in displayes it together at the bottom
+  3. Load Button -- Takes information from a saved file
+  4. Save Button -- The Button must be enabled to worked; it takes the informationa stores it to a file
+  5. Exit Button -- This Button returns you to DOS
+  6. Print Button -- This Button take information from the show box and sends it to the printer
+  7. Dial Button -- This Button will automatically dial the phone number for you
+
+
+
+
+
+
+
+
+                Chapter 3.        Show Command
+        This button will take information typed in by you and displayed 
+together at the lower section of your screen.
+
+
+
+
+
+
+
+
+                Chapter 4.        Load + Save Command
+
+        These two buttons are the heart of the program.  
+
+        Section 1.   Save
+                 To Save, have the boxs filled in you want to be saved.  Have
+                 a filename in the "FILENAME" box.  Enable the Save Buttons by
+                 click the check box to "YES" and then click "SAVE".
+
+        Section 2.    Load
+                 To Load, have the filename in the "FILENAME" box.  Click on 
+                 "LOAD".  The name should appear in the box at the bottom.
+
+
+
+
+
+
+
+
+                Chapter 5.        Print Command
+        The Print Button is disabled on the shareware version.  The Print 
+Command is used to send the information in the box at the bottom to the 
+printer.
+
+
+
+
+
+
+
+
+                Chapter 6.        Dial Command
+        The Dial Command is disabled on the shareware version.  The Dial 
+Command is used to dial numbers.  First you must run the PSETUP.EXE to 
+save the COM number of your modem.  You only have to run this once. 
+Place the number in the box next to the Dial Button.  Then click "DIAL"
+Instructions should appear.
+
+
+
+
+
+
+
+
+                Chapter 7.        Registration
+        The fully functional copy is $2.00 US dollars.  To recieve a copy
+leave a message to "ghost308@AOL.com".
+
+
+
+
+
+
+
+
+                Chapter 8.        Specs.
+        Tyrant Software is located in Bartlett, Tn.  This program was made on
+QuickBasic ver 4.5. 
+
+                                                                11/28/95

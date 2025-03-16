@@ -1,0 +1,540 @@
+
+Shareware Documentation            QB/EVGFX (C)1990 Cornel Huth
+
+Complete documentation is available with registration.  See the
+end of this document for complete ordering information.
+
+Shareware, def.  A try-before-you-buy marketing concept.  It
+relies on those that benefit from the product to pay for it.  Go
+ahead and try before you buy.  If you can't use it, pass it
+along, someone else may.  If you can and do use it, pay for it. 
+What do you get for your money?  Not only the legal continued use
+of the product but you also get personal support from the author. 
+Need something changed for a particular need?  Just ask.  Try
+that anywhere else.  Just remember, this product is not free, so
+if you use it please pay for it.
+
+
+OVERVIEW
+
+QB/EVGFX is a set of graphic routines for the EGA and VGA
+assembled into a linkable LIB file.  All routines have been
+written in 8086 assembly and are self-contained.  In other words,
+even though QB/EVGFX has been designed for QuickBASIC 4.00+
+compilers, QuickBASIC itself is not needed.
+
+QB/EVGFX requires an EGA or VGA compatible video card with at
+least 256K of RAM.  It can be used in any native EGA and VGA mode
+and also extended modes.  All these routines will work on either
+an EGA or VGA.
+
+Accept the fact that these routines are for programmers. 
+Understand that this documentation is for programmers.
+If you are not completely familiar with QB, BC, LINK and LIB, do
+not fault this documentation.  Consult the appropriate reference
+or register this release to receive the 200-plus-page programmer
+reference manual.  The manual describes each routine completely
+and offers ideas on how it, and QB/EVGFX, can best be used.
+
+----------------------------------------------------------------
+* Some routines require a variable-length string in DGROUP as a 
+* parameter.  If you don't have this capability, see the section
+* on simulating this data structure.
+----------------------------------------------------------------
+
+
+-----------------------
+QB/EVGFX COMMAND SUMMARY
+ VIDEO CONTROL ROUTINES
+ DRAWING ROUTINES
+ FONTS
+ MISC ROUTINES
+
+-------------------------------
+VIDEO CONTROL ROUTINES include:
+
+EGAVIDEO,VGAVIDEO,COLORVIDEO
+SETMODE,SETMODEX,GETMODE
+SETPSA,GETPSA
+SETPALREG,SETPALETTE
+SETSCNBUFF
+BLANKSCN
+BLINKBIT
+WAITVS
+
+
+FUNCTION EGAVIDEO%()
+EGAVIDEO returns -1 if EGA video is supported, 0 if not.
+Eg>IsEGA = EGAVIDEO
+
+
+FUNCTION VGAVIDEO%()
+VGAVIDEO returns -1 if VGA video is supported, 0 if not.
+Eg>IsVGA = VGAVIDEO
+
+
+FUNCTION COLORVIDEO%()
+COLORVIDEO returns -1 if color video is supported, 0 if not.
+Eg>IsColor = COLORVIDEO
+
+
+SUB SETMODE(mode%)
+SETMODE sets the computer's BIOS video to mode.  
+Normal EGA 640x350x16 graphics (QB SCREEN 9) is SETMODE 16.
+Normal VGA 640x480x16 graphics (QB SCREEN 12) is SETMODE 18.
+Eg>SETMODE &H10
+
+
+SUB SETMODEX(regax%,regbx%)
+SETMODEX is similar to SETMODEX but allows setting the computer's
+BIOS mode to an extended mode.  Most extended modes require only
+the AL register, in which case SETMODE can be used.  However,
+some video adapter's extended modes need an additional register
+to also be set (eg EVEREX).  Consult your adapter manual.
+Eg>SETMODEX &H0070,&H0
+
+
+FUNCTION GETMODE%()
+GETMODE returns the current BIOS video mode.
+Eg>VMode = GETMODE
+
+
+SUB SETPSA(onoff%)
+SETPSA activates/deactivates the palette save area. 
+SETPSA 1 activates the BIOS palette save area.  Any future
+changes in the palette will be stored there for later recall.
+SETPSA 0 deactivates the BIOS palette save area.  If you activate
+the PSA in your program you MUST deactivate it before the program
+ends.
+Eg>SETPSA 1
+
+
+SUB GETPSA(pal17$)
+GETPSA returns a table of palette values and border color.  The
+variable pal17$ is a variable length string in DGROUP. The first
+byte of pal17$ returned is the color value for attribute 0,
+second byte is attribute 1, and so on.  Byte 17 of pal17$ is the
+color border value.  This routine should only be used if there is
+an active palette save area (SETPSA 1).
+Eg>GETPSA pal17$
+
+
+SUB SETPALREG(reg%,colorval%)
+SETPALREG sets one of the palette registers.  Attribute 0 is
+controlled by register 0, attribute 1 by register 1...up to
+register 17 which is the border color.  Colorval is any color
+value between 0 and 63.
+Eg>SETPALREG 8,&H37
+
+
+SUB SETPALETTE(pal17$)
+SETPALETTE sets all 16 palette registers and the border with a
+single call.  The variable pal17$ is a variable length string in
+DGROUP.  The first byte of pal17$ is the color value for
+attribute 0, second byte is attribute 1, and so on.  Byte 17 of
+pal17$ is the border color value.  
+Eg>SETPALETTE pal17$
+
+
+SETSCNBUFF(x1%,y1%)
+SETSCNBUFF set the logical dimensions of the video display
+buffer.  This should be done after every video mode change. 
+Standard dimensions are x1%=640, y1%=350 for EGA mode 16,
+x1%=640,y1%=480 for VGA mode 18.
+Eg>SETMODE &H12
+Eg>SETSCNBUFF 640,480
+
+
+BLANKSCN(onoff%)
+BLANKSCN turns the video system on or off.
+BLANKSCN 1 turns the video off.
+BLANKSCN 0 turns the video back on.
+Eg>BLANKSCN 1
+
+
+BLINKBIT(onoff%)
+BLINKBIT allows selecting either 16 possible background values or
+8 background values and 8 blinking.  The palette needs to be
+adjusted on the EGA before using BLINKBIT 1.
+Eg>BLINKBIT 1
+
+
+WAITVS(count%)
+WAITVS waits for count% vertical sync signals.  In EGA mode 16
+and VGA mode 18 a vert sync is at least 1/60th of a second. 
+Eg>WAITVS 1
+
+
+-------------------------
+DRAWING ROUTINES include:
+
+READDOT,DRAWDOT
+DRAWCH
+SETSTEP,GETSTEP
+DRAWLN,DRAWLNP,DRAWLNS
+DRAWSTR
+DRAWELL
+FILLSCN,FILLAREA,FILLAREAP,FLUDAREA,FLUDAREAP
+DIMBLOCK,GETBLOCK,PUTBLOCK
+
+
+The x and y coordinates are screen coordinates with 0,0 at the
+upper-left of the screen.  x runs across, y runs down.
+
+The value is an attribute value, 0 to 15.  Eg, using a value of 7
+would use the color value in attribute register 7.
+
+The mode is the method used when updating the pixels.  A mode=0
+replaces the pixels, mode=8 ANDs the pixels, mode=16 ORs the
+pixels, and mode=24 XORs the pixels.
+
+
+FUNCTION READDOT%(x0%,y0%)
+READDOT returns the value of the pixel at position x0,y0.
+Eg>dot = READDOT(320,175)
+
+
+SUB DRAWDOT(mode%,value%,x0%,y0%)
+DRAWDOT sets the pixel by mode at position x0,y0 to value.
+Eg>DRAWDOT 0,7,320,175
+
+
+SUB DRAWCH(mode%,char%,x0%,y0%,fg%,bg%)
+DRAWCH draws ASCII char by mode at position x0,y0 in foreground
+value fg, background bg.
+Eg>DRAWCH 0,65,0,0,7,0
+
+
+SUB DRAWLN(mode%,value%,x0%,y0%,x1%,y1%)
+DRAWLN draws a line by mode from x0,y0 to x1,y1 in value.
+Eg>DRAWLN 0,7,0,0,639,349
+
+
+SUB DRAWLNP(mode%,pattern$,x0%,y0%,x1%,y1%)
+DRAWLNP draws a line by mode from x0,y0 to x1,y1 using the
+pattern pattern$.  The first byte of pattern$ is to be the shift
+count, the other bytes are the attribute values to use as the
+pattern.  Though not all that useful in DRAWLNP, the shift count
+lets you fill with diagonal patterns in the pattern fill
+routines. 
+Eg>pattern$=chr$(0)  'no shift after each line
+Eg>for i=1 to 15:pattern$ = pattern$ + chr$(i):next
+Eg>DRAWLNP 0,pattern$,0,0,320,175
+
+
+SUB SETSTEP(x0%,y0%)
+SETSTEP sets the x0,y0 point for DRAWLNS.
+Eg>SETSTEP 320,175
+
+
+SUB GETSTEP(x0%,y0%)
+GETSTEP returns the current x0%,y0% step point.
+Eg>GETSTEP x0,y0
+Eg>PRINT x0;y0   'x0=320,y0=175
+
+
+SUB DRAWLNS(mode%,value%,x1%,y1%)
+DRAWLNS draws a line by mode from step point to x1,y1 in value. 
+The initial step point is set using SETSTEP, thereafter, DRAWLNS
+updates the step point.  You cannot have any other QB/EVGFX
+routines between successive DRAWLNSs.
+Eg>DRAWLNS 0,7,310,160
+
+
+FUNCTION DRAWSTR%(mode%,strg$,x0%,y0%,fg%,bg%,gap%)
+DRAWSTR draws a text string by mode starting at x0,y0 in
+foreground value fg, background bg, with an inter-character gap
+of gap.  If gap=0 the inter-character gap is taken from the
+font's width table for proportional spacing.  DRAWSTR returns the
+next available x-position after the end of the string.
+Eg>nx=DRAWSTR(0,"Drawn in proportional space...",0,0,7,0,0)
+
+
+SUB DRAWELL(mode%,value%,xC%,yC%,maj%,min%)
+DRAWELL draws an ellipse by mode with the center at xC,yC with an
+x-radius of maj, y-radius of min, in value.
+Eg>DRAWELL 0,7,320,175,100,130
+
+
+SUB FILLSCN(lines%,value%)
+FILLSCN fills the screen buffer starting at 0,0 for lines count,
+in value.
+Eg>FILLSCN 350,0
+
+
+SUB FILLAREA(mode%,newval%,borderval%,x%,y%)
+FILLAREA will boundary-fill any shape by mode, bounded by
+borderval completely enclosing x,y, with newval.  For each level
+of complexity, FILLAREA uses 12 bytes of stack space.  Many areas
+can be filled with as little at 12 bytes (an empty circle) while
+others can require more, perhaps 1K (very complex).  In any case,
+by changing the DECLARE of FILLAREA from a SUB to a FUNCTION, you
+can get the maximum number of bytes used on the stack, say, for
+debugging purposes.
+Eg>DECLARE FILLAREA%(mode%,newval%,borderval%,x%,y%)
+Eg>maxbytes=FILLAREA(0,5,7,320,175)
+
+
+SUB FILLAREAP(mode%,pattern$,borderval%,x%,y%)
+FILLAREAP will boundary-fill any non-complex shape by mode,
+bounded by borderval completely enclosing x,y, with pattern$. 
+FILLAREAP cannot make complex pattern fills.  For complex pattern
+fills, use FLUDAREAP.  See DRAWLNP for the structure of pattern$.
+Eg>FILLAREAP 0,pattern$,7,320,175)
+
+
+SUB FLUDAREA(mode%,newval%,x%,y%)
+FLUDAREA will flood-fill any shape by mode that has the value at
+x,y, with newval.  The difference between FLUDAREA and FILLAREA
+is that FILLAREA stops when it reaches a borderval, going over
+any other value.  FLUDAREA stops when it reaches any value other
+than the value at the seed, x,y.  For stack usage, see FILLAREA.
+Eg>FLUDAREA 0,15,320,175
+
+
+SUB FLUDAREAP(mode%,pattern$,x%,y%)
+FLUDAREAP will flood-fill any shape by mode that has the value at
+x,y, with pattern$.  For stack usage, see FILLAREA.  See DRAWLNP
+for the structure of pattern$.
+Eg>FLUDAREAP 0,pattern$,320,175
+
+
+FUNCTION DIMBLOCK&(pmask%,x0%,y0%,x1%,y1%)
+DIMBLOCK is used to calculate the number of bytes needed to store
+the block defined by the upper-left coordinates x0,y0 and lower-
+right coordinates x1,y1, based on the plane mask, pmask.  Pmask
+is the mask value of planes to be used where 0 is no planes and
+15 is all 4 planes (pmask=3 uses planes 0 & 1...).
+Eg>sz& = DIMBLOCK&(15,0,0,79,99)
+Eg>PRINT sz&   'size = 4006 bytes
+
+
+SUB GETBLOCK(pmask%,x0%,y0%,x1%,y1%,vseg%,voff%)
+GETBLOCK stores to RAM the block defined by the upper-left
+coordinates x0,y0 and the lower-right coordinates x1,y1, based on
+the plane mask, pmask.  The vseg and voff parameters are the
+VARSEG and VARPTR to the storage area in RAM.
+Eg>REDIM buff(0 TO sz&) AS STRING * 1
+Eg>GETBLOCK 15,0,0,79,99,VARSEG(buff(0)),VARPTR(buff(0))
+
+
+SUB PUTBLOCK(mode%,x0%,y0%,vseg%,voff%)
+PUTBLOCK stores to the video buffer by mode the block in RAM to
+the upper-left coordinates x0,y0.  The block in RAM is pointed to
+by the vseg and voff parameters.
+Eg>PUTBLOCK 0,1,1,VARSEG(buff(0)),VARPTR(buff(0))
+
+
+----------------------
+FONT ROUTINES include:
+
+FONTSYS08,FONTSYS14,FONTSYS16,FONTSRF14P
+USERFONT
+
+
+SUB FONTSYS08()
+FONTSYS08 makes the DRAWCH and DRAWSTR routines use the system
+8x8 font in adapter ROM.
+Eg>FONTSYS08
+
+
+SUB FONTSYS14()
+FONTSYS14 makes the DRAWCH and DRAWSTR routines use the system
+8x14 font in adapter ROM.
+Eg>FONTSYS14
+
+
+SUB FONTSYS16()
+FONTSYS16 makes the DRAWCH and DRAWSTR routines use the system
+8x16 font in adapter ROM.  This is a VGA-only font.  On EGA
+systems this call will use the 8x14 font.
+Eg>FONTSYS16
+
+
+SUB FONTSRF14P()
+FONTSRF14P is the proportional font included in the shareware
+release of QB/EVGFX.  Many other fonts and a font editor are
+available.  With them the programmer can create callable or user
+fonts. 
+Eg>FONTSRF14P
+
+
+SUB USERFONT(vseg%,voff%,pts%)
+USERFONT defines a dynamic font.  By using this routine, the
+programmer can use fonts stored on disk rather than having all
+fonts linked in memory.  Vseg and voff point to the font data,
+pts is the height of the font.  The programmer allocates storage
+for the largest font to be used, then loads the font data from
+disk into the storage area.  The area can be reused.
+Eg>REDIM buff(0 TO 8448) AS STRING * 1 'max 32 pts+width table
+Eg>DoLOADUF font$,buff()
+Eg>USERFONT VARSEG(buff(0)),VARPTR(buff(0)),pts
+
+
+----------------------
+MISC ROUTINES include:
+
+GETBIT,SETBIT,XORBIT
+
+
+FUNCTION GETBIT%(BYVAL CheckMe%,BYVAL BitPos%)
+GETBIT returns non-zero if the bit at BitPos is set in CheckMe. 
+BitPos is 15-0 with bit 15 the most significant, 0 the least.
+Eg>set = GETBIT(CheckMe,15)
+
+
+FUNCTION SETBIT%(BYVAL UseMe%,BYVAL BitPos%)
+SETBIT sets the bit at BitPos returning the new value.
+Eg>UseMe = SETBIT(UseMe,0)
+
+
+FUNCTION XORBIT%(BYVAL XorMe%,BYVAL BitPos%)
+XORBIT toggles the bit at BitPos returning the new value.
+Eg>NewXorMe = XORBIT(XorMe,15)
+
+
+
+-------------------------------------------------
+In addition to the shareware release of QB/EVGFX:
+QB/EVGFX2, QB/EVGFX plus window and 2-D routines:
+
+SUB SETWIN2D(vseg2%,voff2%)
+SETWIN2D defines the 2-D window.
+
+SUB GETWIN2D(vseg2%,voff2%)
+GETWIN2D returns the window definitions.
+
+SUB SETSCNORG(x0%,y0%)
+SETSCNORG positions the hardware display start address allowing
+smooth-scrolling of the video buffer, page flipping...
+
+FUNCTION DRAWSTRW%(mode%,strg$,x0%,y0%,fg%,bg%,gap%)
+DRAWSTRW is identical to DRAWSTR except it only draws characters
+that are within the defined window.
+
+SUB DRAWELLW(mode%,value%,xC%,yC%,maj%,min%)
+DRAWELLW is identical to DRAWELL except that it draws only within
+the defined window.  DRAWELLW can also be used to draw arcs.
+
+SUB FILLWIN(mode%,value%)
+FILLWIN fills the defined window with value.
+
+SUB FILLWINP(mode%,pattern$)
+FILLWINP fills the defined window with pattern$.
+
+SUB XFORM2D(vseg2%,voff2%)
+XFORM2D performs complete transformations in 2-D on any number of
+2-D points.  Rotation degrees, rotational center, x-axis
+translation, y-axis translation, x-axis scale, y-axis scale, can
+all be done with a single call.
+
+FUNCTION CLIP2D%(vsegln2%,voffln2%)
+CLIP2D performs the classic Sutherland-Cohen algorithm to clip
+lines to the defined window.  Approximately 1000 lines per second
+per MHz CPU speed can be clipped (33000 lines/sec on a 386/33).
+
+
+
+------------------------------------------------------------
+In addition to the shareware release QB/EVGFX and QB/EVGFX2:
+QB/EVGFX3, QB/EVGFX plus QB/EVGFX2 plus 3-D routines:
+
+SUB SETWIN3D(vseg3%,voff3%)
+SETWIN3D defines the 3-D window.
+
+SUB GETWIN3D(vseg3%,voff3%)
+GETWIN3D returns the window definitions.
+
+SUB XFORM3D(vseg3%,voff3%)
+XFORM3D performs complete transformations in 3-D on any number of
+3-D points.  Rotation heading, pitch, bank, rotational center, x-
+ & y- & z-axis translation, x- & y- & z-axis scale can all be
+done with a single call.
+
+FUNCTION CLIP3D%(vsegln3%,voffln3%)
+CLIP3D performs the classic Sutherland-Cohen algorithm to clip
+lines to the defined window.  Approximately 1000 lines per second
+per MHz CPU speed can be clipped (33000 lines/sec on a 386/33).
+
+SUB PROJORTHO(vseg3%,voff3%)
+PROJORTHO performs orthographic parallel projection conversion on
+a set of 3-D points.
+
+SUB PROJPERS(vseg3%,voff3%)
+PROJPERS performs one-point perspective projection conversion on
+a set of 3-D points.
+
+
+-------------------------------
+SIMULATING NEAR VAR-LEN STRINGS
+
+Declare the routine replacing $ with a %
+DECLARE FUNCTION DRAWSTR%(mode%,doff%,x0%,y0%,fg%,bg%,gap%)
+
+Define a structure that will be stored in DGROUP.
+TYPE SIMSTRtype
+length AS INTEGER
+addr   AS INTEGER
+strg   AS STRING * 200   'or whatever max length you want
+END TYPE
+DIM SIMSTR AS SIMSTRtype
+
+MID$(SIMSTR.strg,1,30) = "I'M REGISTERING QB/EVGFX, NOW!"
+SIMSTR.length = 30       
+SIMSTR.addr = VARPTR(SIMSTR.strg)
+nx = DRAWSTR(0,VARPTR(SIMSTR),0,0,7,0,8)
+
+
+
+
+
+ORDERING INFORMATION
+
+
+
+
+Ship To:  
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+
+
+                               Number             Extended
+                             of copies             amount
+
+        QB/EVGFX registration         x $19.95 = $
+                               ------             --------
+                    QB/EVGFX2         x  39.95 =
+                               ------             --------
+                    QB/EVGFX3         x  59.95 =
+                               ------             --------
+       Font Editor with fonts*        x  19.95 =  
+                               ------             --------
+                                      Subtotal = $
+                                                  --------
+                  shipped to Texas, add 8% tax =
+                                                  --------
+                                         Total = $
+                                                  ========
+
+All orders include the respective programmer's manual.  Upgrades
+are available at the difference in price plus $10.  All orders
+will receive update notices unless request is made otherwise.
+
+*All orders received before June 30, 1991 will receive the font
+editor and fonts disk at no charge.
+
+Send this order form with payment to:
+
+           Cornel Huth
+           6402 Ingram Road
+           San Antonio, Texas  78238      Tele:(512)684-8065
+
+
+

@@ -1,0 +1,8 @@
+CLS
+SHELL "chkdsk"
+WHILE INKEY$ <> CHR$(13)
+  SLEEP
+WEND
+SHELL "mem"
+END
+

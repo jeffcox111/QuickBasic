@@ -1,0 +1,25 @@
+-------------------------------------
+BCRYPT VERSION 1.10
+-------------------------------------
+
+Frequently asked questions:
+
+What is BCRYPT?
+
+        BCRYPT is a series of routines designed to implement security
+and encryption functions for the Quick Basic, PDS Basic and Power
+Basic programmer.
+
+How would I use BCRYPT?
+
+        The intended use of the base package is to encrypt save game
+files, private journals, etc.  Later versions will add more complete
+security functions.
+
+How secure is BCRYPT?
+
+        The base package provides a reasonable level of security.
+Future versions of BCRYPT will include complete cryptographic
+packages.
+
+

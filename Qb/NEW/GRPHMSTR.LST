@@ -1,0 +1,110 @@
+ARYSET............ARYWORKS          CLRVRT............CLRVRT
+CLSFILE...........FILEWRKS          CNGCLR............CNGCLR
+CPYBLK............ARYWORKS          CRFILE............FILEWRKS
+DSCROLLOFF........SCROLOFF          DSCROLLON.........SCROLLON
+EXPLODE...........EXPLODE           FREDLOAD..........FREDSVLD
+FREDSAVE..........FREDSVLD          FREDSCRUNCH.......FCRUNC2
+FREDSUNCRUNCH.....FUNCRNH2          GETCLR............VPALETTE
+GETFLPNTR.........FILEWRKS          GETPAL............VPALETTE
+HCLOSE............HCLOSES           HCLOSE2...........HCLOSES
+HCLOSE4...........HCLOSES           HCLOSE8...........HCLOSES
+HOPEN.............HOPENS            HOPEN2............HOPENS
+HOPEN4............HOPENS            HOPEN8............HOPENS
+HSHAKE............SHAKE             IMPLODE...........EXPLODE
+LOADPAL...........PALFILE           LSCROLLOFF........SCROLOFF
+LSCROLLON.........SCROLLON          MICRODELAY........DELAYS
+MIRROR............MIRROR            OPNFILE...........FILEWRKS
+PANDOWN...........PANS              PANLEFT...........PANS
+PANRIGHT..........PANS              PANUP.............PANS
+PUTBACK...........PUTS              PUTFRONT..........PUTS
+RDFILE............FILEWRKS          READIMAGE.........RDIMG
+RSCROLLOFF........SCROLOFF          RSCROLLON.........SCROLLON
+SAVEPAL...........PALFILE           SCPRINT...........STDPRT
+SCRN2VRT..........ARYWORKS          SETCLR............VPALETTE
+SETFLPNTR.........FILEWRKS          SETPAL............VPALETTE
+SHTLFT............SHIFTS            SHTRGT............SHIFTS
+UNZOOM............ZOOM              USCROLLOFF........SCROLOFF
+USCROLLON.........SCROLLON          VCLOSE............VCLOSES
+VCLOSE2...........VCLOSES           VCLOSE4...........VCLOSES
+VCLOSE8...........VCLOSES           VCNGCLR...........CNGCLR
+VCNGCLRS..........CNGCLR            VOPEN.............VOPENS
+VOPEN2............VOPENS            VOPEN4............VOPENS
+VOPEN8............VOPENS            VRT2SCRN..........ARYWORKS
+VSHAKE............SHAKE             WRTFILE...........FILEWRKS
+ZOOM..............ZOOM              
+
+ARYWORKS          Offset: 00000010H  Code and data size: b5H
+  ARYSET            CPYBLK            SCRN2VRT          VRT2SCRN
+
+CLRVRT            Offset: 00000180H  Code and data size: 27H
+  CLRVRT          
+
+CNGCLR            Offset: 00000240H  Code and data size: bdH
+  CNGCLR            VCNGCLR           VCNGCLRS        
+
+DELAYS            Offset: 000003b0H  Code and data size: 20H
+  MICRODELAY      
+
+EXPLODE           Offset: 00000470H  Code and data size: 17fH
+  EXPLODE           IMPLODE         
+
+FCRUNC2           Offset: 00000690H  Code and data size: dcH
+  FREDSCRUNCH     
+
+FILEWRKS          Offset: 00000800H  Code and data size: 158H
+  CLSFILE           CRFILE            GETFLPNTR         OPNFILE
+  RDFILE            SETFLPNTR         WRTFILE         
+
+FREDSVLD          Offset: 00000a40H  Code and data size: 47dH
+  FREDLOAD          FREDSAVE        
+
+FUNCRNH2          Offset: 00001360H  Code and data size: 96H
+  FREDSUNCRUNCH   
+
+HCLOSES           Offset: 000014a0H  Code and data size: 27aH
+  HCLOSE            HCLOSE2           HCLOSE4           HCLOSE8
+
+HOPENS            Offset: 000017d0H  Code and data size: 286H
+  HOPEN             HOPEN2            HOPEN4            HOPEN8
+
+MIRROR            Offset: 00001b10H  Code and data size: b9H
+  MIRROR          
+
+PALFILE           Offset: 00001c60H  Code and data size: 222H
+  LOADPAL           SAVEPAL         
+
+PANS              Offset: 00002230H  Code and data size: 1b8H
+  PANDOWN           PANLEFT           PANRIGHT          PANUP
+
+PUTS              Offset: 000024a0H  Code and data size: 1dbH
+  PUTBACK           PUTFRONT        
+
+RDIMG             Offset: 00002720H  Code and data size: 2f6H
+  READIMAGE       
+
+SCROLLON          Offset: 00002d90H  Code and data size: 183H
+  DSCROLLON         LSCROLLON         RSCROLLON         USCROLLON
+
+SCROLOFF          Offset: 00002fe0H  Code and data size: 1a7H
+  DSCROLLOFF        LSCROLLOFF        RSCROLLOFF        USCROLLOFF
+
+SHAKE             Offset: 00003250H  Code and data size: fdH
+  HSHAKE            VSHAKE          
+
+SHIFTS            Offset: 000033f0H  Code and data size: 3aH
+  SHTLFT            SHTRGT          
+
+STDPRT            Offset: 000034d0H  Code and data size: 853H
+  SCPRINT         
+
+VCLOSES           Offset: 000045b0H  Code and data size: 26dH
+  VCLOSE            VCLOSE2           VCLOSE4           VCLOSE8
+
+VOPENS            Offset: 000048e0H  Code and data size: 26dH
+  VOPEN             VOPEN2            VOPEN4            VOPEN8
+
+VPALETTE          Offset: 00004c00H  Code and data size: baH
+  GETCLR            GETPAL            SETCLR            SETPAL
+
+ZOOM              Offset: 00004d70H  Code and data size: 9eH
+  UNZOOM            ZOOM            

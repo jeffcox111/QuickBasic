@@ -1,0 +1,9 @@
+SCREEN 13
+DO
+RANDOMIZE TIMER
+x% = INT(RND * 500)
+y% = INT(RND * 500)
+c% = INT(RND * 256)
+PAINT (x%, y%), c%
+LOOP WHILE INKEY$ = ""
+

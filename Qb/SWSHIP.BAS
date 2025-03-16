@@ -1,0 +1,300 @@
+
+100 CLS
+COLOR 15
+101 WIDTH 40
+900 PRINT "            *****************"
+COLOR 7
+102 PRINT "            *SW SHIP BUILDER*"
+COLOR 8
+103 PRINT "            *****************"
+COLOR 15
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+PRINT
+105 PRINT "VERSION 2.0       MattIncorporated., Co."
+106 INPUT start$
+108 IF start$ = "a" THEN GOTO 109
+109 CLS
+110 COLOR 9
+11657670 PRINT "              MAIN MENU"
+111 PRINT
+COLOR 1
+112 PRINT "1. START BUILDING"
+113 PRINT "2. INSTRUCTIONS"
+114 PRINT "3. QUIT GAME"
+115 INPUT MAIN$
+116 IF MAIN$ = "1" THEN GOTO 150
+117 IF MAIN$ = "2" THEN GOTO 120
+118 IF MAIN$ = "3" THEN GOTO 119
+119 END
+120 CLS
+9687 COLOR 4
+121 PRINT "SW SHIP BUILDER IS A GAME WHERE YOU"
+122 PRINT "CAN DESIGN YOUR OWN SW SHIPS.  "
+123 PRINT "FIRST, PRESS 1 TO START THE PROGRAM."
+124 PRINT "IF THE COMPUTER ASKS YOU A QUESTION,"
+125 PRINT "AWNSER IT BY TYPING WHATEVER IS IN"
+126 PRINT "THE PARENTHESES."
+COLOR 12
+PRINT
+127 PRINT "i.e.: (S)TART (Q)UIT"
+128 PRINT "? S"
+PRINT
+129 PRINT "THEREST OF THE PROGRAM IS SELF-"
+130 PRINT "-EXPLANATORY. HAVE FUN!"
+131 INPUT ABC$
+132 GOTO 109
+150 CLS
+COLOR 3
+151 PRINT "           CREATE A SHIP"
+152 PRINT
+COLOR 11
+153 PRINT "DO YOU WANT YOUR SHIP TO BE:"
+154 PRINT "(REBEL)  (IMPERIAL)"
+155 INPUT REBIMP$
+156 IF REBIMP$ = "REBEL" THEN GOTO 160
+157 IF REBIMP$ = "IMPERIAL" THEN GOTO 160
+158 PRINT "I DO NOT UNDERSTAND. PLEASE TYPE AGAIN"
+159 GOTO 151
+160 CLS
+161 PRINT "DO YOU WANT YOUR SHIP TO BE AN:"
+162 PRINT "(FIGHTER) (MIDCAPITOL) (CAPITOL)"
+163 PRINT "(BATTLESTATION)"
+164 INPUT FMCB$
+165 CLS
+166 PRINT "HOW MANY TURBO LASER CANNONS?"
+167 INPUT LASER$
+168 PRINT "HOW MANY ION CANNONS?"
+169 INPUT ION$
+170 PRINT "WHAT OTHER WEAPONS? (TYPE L FOR A LIST)"
+171 INPUT OTHER$
+172 IF OTHER$ = "L" THEN GOTO 210
+67540672 PRINT "HOW MANY CREW MEMBERS?"
+98524572 INPUT CREW$
+5438798 PRINT "HOW LONG IS IT IN METERS?"
+7547685 INPUT LENGTH$
+173 CLS
+190 CLS
+COLOR 4
+195 PRINT "LASER CANNONS:"; LASER$
+196 PRINT "ION CANNONS:"; ION$
+197 PRINT "OTHER WEPONS:"; OTHER$
+198 PRINT "CREW:"; CREW$
+199 PRINT "LENGTH:"; LENGTH$
+207 PRINT "WHAT DO YOU WANT TO NAME IT?"
+208 INPUT NAME$
+209 GOTO 350
+COLOR 6
+210 PRINT "YOU CAN HAVE WEAPONS LIKE:"
+211 PRINT "DEATH STAR LASER, SC TORPEDOES"
+212 PRINT "GRAVITY WELL PROJECTORS"
+213 PRINT "PROTON TORPEDOES, "
+214 PRINT "CONCUSSION MISSLES, OR ANYTHING"
+215 PRINT "ELSE YOU CAN THINK OF!"
+216 GOTO 170
+350 CLS
+COLOR 15
+354 PRINT "_______________________________________"
+352 PRINT "               "; REBIMP$; " TIMES"
+COLOR 31
+351 PRINT "              EXTRA! EXTRA!"
+COLOR 15
+353 PRINT "    NEW "; REBIMP$; " SHIP DEPLOYED!"
+355 PRINT "---------------------------------------"
+COLOR 7
+356 PRINT "THE NEW SHIP, CALLED THE "; NAME$; " WAS"
+357 PRINT "DEPLOYED TODAY. IT HAS "; CREW$; " CREW"
+358 PRINT "MEMBERS, AND IT IS "; LENGTH$; " METERS"
+359 PRINT "LONG.  "
+360 PRINT
+COLOR 8
+361 PRINT "press any key to test ship"
+362 INPUT ANY$
+363 IF ANY$ = "A" THEN GOTO 364
+364 CLS
+COLOR 3
+365 PRINT "          *TESTING YOUR SHIP*"
+366 PRINT
+367 PRINT " > = YOUR SHIP   * = ENEMY SHIP "
+368 PRINT "_-_-_ = LASER FIRE = = = = ION CANNONS"
+369 PRINT ": : : :="; OTHER$
+370 PRINT "-----------------------------------------"
+371 PRINT "PRESS ANY KEY TO START TEST"
+372 INPUT STRTTST$
+373 IF STRTTST$ = "A" THEN GOTO 374
+374 CLS
+COLOR 8
+375 PRINT "___________________________________"
+376 PRINT "|                                 |"
+377 PRINT "|                                 |"
+378 PRINT "|  >                              |"
+379 PRINT "|                            *    |"
+380 PRINT "|                                 |"
+390 PRINT "|                                 |"
+391 PRINT "|                                 |"
+392 PRINT "|_________________________________|"
+COLOR 15
+393 PRINT "Enemy sighted.  Do you wish to:"
+394 PRINT "(M)ove closer (F)ire weapons"
+395 INPUT mf$
+396 IF mf$ = "M" THEN GOTO 400
+398 IF mf$ = "F" THEN GOTO 450
+COLOR 8
+400 PRINT "___________________________________"
+401 PRINT "|                                 |"
+402 PRINT "|                                 |"
+403 PRINT "|          _-_>_-_-_-_*           |"
+404 PRINT "|                                 |"
+405 PRINT "|                                 |"
+406 PRINT "|                                 |"
+407 PRINT "|                                 |"
+408 PRINT "|_________________________________|"
+COLOR 15
+409 PRINT "ENEMY IS FIRING. WHAT DO YOU WANT TO"
+410 PRINT "DO? (M)OVE  (F)IRE WEAPONS"
+411 INPUT MFII$
+412 IF MFII$ = "M" THEN GOTO 415
+413 IF MFII$ = "F" THEN GOTO 450
+415 CLS
+COLOR 7
+416 PRINT " |      _________    _________"
+417 PRINT " |     (_________)  (_________)"
+418 PRINT " |/___        _________ "
+419 PRINT " |\___)      (_________)"
+420 PRINT " |\"
+421 PRINT " |"
+422 PRINT
+COLOR 20
+423 PRINT "OH NO! THE ENEMY IS DESTROYING YOU!"
+424 INPUT DES$
+425 CLS
+COLOR 30
+426 PRINT "               \  | /"
+427 PRINT "            \ \ | | | / /"
+428 PRINT "           \ \ \ | | / / /"
+COLOR 14
+429 PRINT "           - -BOOOOOOOOM!- -"
+COLOR 30
+430 PRINT "           / / / | | \ \ \"
+431 PRINT "            / / | | | \ \"
+432 PRINT "               /  |  \"
+433 PRINT
+434 INPUT DEAD$
+435 CLS
+COLOR 12
+436 PRINT "TOO BAD.  THE FORCE WAS NOT WITH YOU."
+437 PRINT
+438 PRINT "DO YOU WANT TO: (T)RY AGAIN  (M)AIN MENU"
+439 INPUT THEEND$
+440 IF THEEND$ = "T" THEN GOTO 364
+441 IF THEEND$ = "M" THEN GOTO 109
+450 CLS
+COLOR 8
+451 PRINT "            WEAPONS"
+COLOR 7
+452 PRINT "                  ____________"
+453 PRINT "(L)ASERS         |\          /|"
+454 PRINT "(I)ON CANNONS    | *  __|__   |"
+455 PRINT "(O)THER WEAPON   |      |     |"
+456 PRINT "(M)OVE AROUND    |/__________\|"
+698724854723 PRINT
+47544837543 PRINT
+COLOR 15
+457 PRINT "TO FIRE YOUR WEAPON, PRESS THE LETTER."
+458 PRINT "MAKE SURE THE ENEMY IS IN THE CROSSHAIRS!"
+459 INPUT LIOM$
+460 IF LIOM$ = "M" THEN GOTO 470
+58454854758234 PRINT
+461 PRINT "FIRE!"
+5467384538675867 PRINT
+462 PRINT "YOU MISSED."
+463 GOTO 451
+470 CLS
+COLOR 8
+471 PRINT "            WEAPONS"
+COLOR 7
+472 PRINT "                 ______________"
+473 PRINT "(L)ASERS        |\      |     /|"
+474 PRINT "(I)ON CANNONS   |     --*--    |"
+475 PRINT "(O)THER WEAPON  |       |      |"
+476 PRINT "                |/____________\|"
+COLOR 15
+477 PRINT "FIRE! THE ENEMY IS IN THE CROSSHAIRS!"
+478 INPUT IFGD$
+IF IFGD$ = "I" THEN GOTO 500
+IF IFGD$ = "L" THEN GOTO 600
+IF IFGD$ = "O" THEN GOTO 700
+479 CLS
+COLOR 7
+480 PRINT "                    "
+481 PRINT "                *  "
+COLOR 10
+482 PRINT "            __      __"
+483 PRINT "           / /      \ \"
+484 PRINT "          / /        \ \"
+485 PRINT "         /_/          \_\"
+486 PRINT
+487 INPUT FGDKHJ$
+CLS
+COLOR 14
+488 PRINT
+489 PRINT "           \\\\\|/////"
+490 PRINT "           -BOOOOOOOM-"
+491 PRINT "           /////|\\\\\"
+492 PRINT ""
+COLOR 9
+493 PRINT "THE ENEMY IS DEAD!  MANY MORE "; NAME$; "S"
+494 PRINT "ARE BEING PRODUCED!  HURRAY FOR THE"
+495 PRINT REBIMP$; "S!"
+496 INPUT FRSKNHJINHUACGRVGRINHU$
+497 GOTO 109
+COLOR 8
+500 PRINT "______________________"
+501 PRINT "|                    |"
+502 PRINT "|                    |"
+503 PRINT "|  >= = = = = = *    |"
+504 PRINT "|                    |"
+505 PRINT "|                    |"
+506 PRINT "|____________________|"
+INPUT FKRWGFR$
+GOTO 479
+COLOR 8
+600 PRINT "______________________"
+601 PRINT "|                    |"
+602 PRINT "|                    |"
+603 PRINT "|  >_-_-_-_-_-_-*    |"
+604 PRINT "|                    |"
+605 PRINT "|                    |"
+606 PRINT "|____________________|"
+INPUT JCFHNRURFEWLT$
+GOTO 479
+COLOR 8
+700 PRINT "______________________"
+701 PRINT "|                    |"
+702 PRINT "|                    |"
+703 PRINT "|  >: : : : : : *    |"
+704 PRINT "|                    |"
+705 PRINT "|                    |"
+706 PRINT "|____________________|"
+INPUT JFRTWEEHTGUIRKVEE$
+GOTO 479
+800 PRINT "  ______________ "
+801 PRINT " |          |___|"
+802 PRINT " |______________|"
+803 PRINT "     ; NAME$; "
+
+
+

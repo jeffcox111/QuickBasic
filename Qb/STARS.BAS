@@ -1,0 +1,16 @@
+SCREEN 13
+RANDOMIZE TIMER
+1 x = 1
+CLS
+DO
+x = x + 1
+x% = INT(RND * 500)
+y% = INT(RND * 500)
+c% = INT(RND * 256)
+PSET (x%, y%), c%
+IF INKEY$ <> "" THEN END
+IF STRIG(1) = -1 OR STRIG(5) = -1 THEN END
+LOOP UNTIL x = 100000
+GOTO 1
+
+

@@ -1,0 +1,94 @@
+-------------------------------------
+BCRYPT VERSION 1.00
+-------------------------------------
+
+Disclaimer:
+
+--------- WARNING ---------
+It may violate US Customs Regulations to export this
+document, program files, or programs using elements of
+this system.
+It is the responsibility of the end user to determine
+the legality or illegality of any use or export, the
+Author(s) take no responsibility for such actions.
+--------- WARNING ---------
+
+Warranty:
+
+Mountain Bay Software makes no warranty of any kind,
+either express or implied, including but not limited to implied
+warranties of merchantability and fitness for a particular
+purpose, with respect to this system and accompanying
+documentation.
+
+IN NO EVENT SHALL MOUNTAIN BAY SOFTWARE BE LIABLE FOR
+ANY DAMAGES (INCLUDING DAMAGES FOR LOSS OF PROFITS, LOSS OF
+INFORMATION, OR OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF
+OR INABILITY TO USE THIS SYSTEM.
+
+Mountain Bay Software specifically does not guarantee that
+any additional security will be gained from using these
+routines.  Full security depends on far more then just an
+encryption system. It is the end user's specific responsibility to
+determine his own security needs and develop a system to satisfy those
+needs.
+
+Distribution:
+
+BCRYPT may be distributed under the following conditions:
+
+1)    The original archive is unmodified.
+
+2)    No additional charge is made for BCRYPT.  I.E., no fee's levied
+beyond the normal fee to acess the BBS, or the normal cost of a disk.
+
+3)    All files listed in PACKING.LST are present, and no additional
+files are added to the archive.
+
+4)    Vendors please contact me for a copy of the latest version of
+BCRYPT.
+
+Shareware License:
+
+This evaluation copy of BCRYPT may be used under the following
+conditions:
+
+1)    BCRYPT is distributed as shareware.  This means that you may use
+it for a limited amount of time for evaluation purposes.
+
+2)    You may evaluate BCRYPT for 90 days.  Any use beyond this point
+requires registration.
+
+3)    You may not release applications or utilities using BCRYPT
+without having registered it.
+
+4)    You may *NOT* export BCRYPT beyond the borders of the United
+States.  To do so may violate Federal Law.  Use of this product
+constitutes acceptance of responsibility for controlling the
+distribution of such products in accordance with Federal regulations.
+
+Registered Version License:
+
+1)    The user is granted full rights to distribute programs
+containing BCRYPT routines without royalty payment.  He may not
+however release libraries containing any portion of BCRYPT.
+
+2)    Use of this product constitutes acceptance of responsibility for
+controlling the distribution of such products in accordance with
+Federal regulations.
+
+3)    This product may not be disassembled or reverse engineered.
+However, the user may use LIB/LINK for production of libraries
+containing BCRYPT code for personal use, or for developing programs
+using all or part of BCRYPT.  These modified libraries may not be
+redistributed.
+
+4)    This license is transferrable.  To transfer, send a letter
+signed by the original registrant to Mountain Bay Software with the
+name and adress of the registrant and the transferee.
+
+Site and Corporate Licenses:
+
+Please contact me for information regarding site and corporate
+licensing.
+

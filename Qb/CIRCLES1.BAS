@@ -1,0 +1,24 @@
+DECLARE SUB cir ()
+DECLARE SUB delay ()
+cir
+
+
+
+
+SUB cir
+CLS
+SCREEN 13
+DO
+RANDOMIZE TIMER
+x% = INT(RND * 500)
+y% = INT(RND * 500)
+c% = INT(RND * 256)
+CIRCLE (x%, y%), c%, c%
+LOOP WHILE INKEY$ = ""
+END SUB
+
+SUB delay
+FOR b = 1 TO 250
+NEXT b
+END SUB
+

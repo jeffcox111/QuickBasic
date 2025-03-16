@@ -1,0 +1,27 @@
+-------------------------------------
+BCRYPT VERSION 1.10
+-------------------------------------
+
+Files included in this package:
+
+BCRYPT4  BI    Declarations file for BCRYPT (QB  Version)
+BCRYPT7  BI    Declarations file for BCRYPT (PDS Version)
+BCRYPTP  BI    Declarations file for BCRYPT (PB  Version)
+BCRYPT   DOC   Documentation for BCRYPT
+BCRYPT   FAQ   Frequently asked questions about BCRYPT
+BCRYPT   HST   The history and future of BCRYPT
+BCRYPT4  LIB   BCRYPT Library for QB4.5
+BCRYPT4  QLB    "                  "
+BCRYPT7  LIB   BCRYPT Library for PDS7.1
+BCRYPT7  QLB    "                  "
+BCRYPTP  PBL   BCRYPT Library for PB 3.0
+DESC     SDI   File describing the contents of this archive
+FILE_ID  DIZ    "                  "                      "
+LICENSE  DOC   User license for BCRYPT
+PACKING  LST   This file
+README   1ST   Late-Breaking news and information
+REGISTER FRM   BCRYPT Registration form
+REGISTER WHY   Benefits of registration
+
+Any other files found are un-authorized additions to this package.
+

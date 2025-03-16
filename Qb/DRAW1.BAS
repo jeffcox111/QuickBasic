@@ -1,0 +1,15 @@
+
+CLS
+
+SCREEN 12
+DRAW "c2"
+DRAW "c8 b l210 b u150 r90 f126 e126 r90 g180 f180 l90 h126 g126 l90 e180 h180"
+DRAW "c8 b ul b l1 r90 f126 e126 r90 g180 f180 l90 h126 g126 l90 e180 h180"
+DRAW "c8 b ul b l1 r90 f126 e126 r90 g180 f180 l90 h126 g126 l90 e180 h180"
+DRAW "c8 b ul b l1 r90 f126 e126 r90 g180 f180 l90 h126 g126 l90 e180 h180"
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+QBasic NoBreak v1.0a
+Copyright (c)1995 by Daniel Trimble
+
+Public Domain CTRL-BREAK and CTRL-C disabler.
+
+Although this product is public domain, I'd like some credit if you use it any
+of your programs that are distributed publically (either public domain, free-
+ware, shareware, commercial, or whathaveyou).  Also, donations are gladly
+accepted!
+
+Welcome to QBasic NoBreak!
+
+I have spent a *long* time researching and trying to figure out how to disable
+CTRL-BREAK and CTRL-C in QBasic.  Many people have asked me throughout my
+programming experiences about disabling them, but I have never been able to
+say that I know how.  Until now.
+
+I've gone step by step, inch by inch to put this all together.  I've collected
+little pieces here and there to the intricate puzzle, and finally put the last
+one into place.  This is it.  This is how you do it in QBasic.
+
+Be forewarned, however, that if you intend to compile your QBasic program,
+this code will add a lot of overhead.  It will not only add a considerable
+amount of code size to your EXE, but it will slow it down too.  I used the
+Microsoft Quick Basic 4.5 compiler to compile NoBreak.BAS into an EXEcutable
+and came out with the following file sizes:
+
+   NoBreak.EXE          requires run-time library        5,158 bytes
+   NoBreak.EXE          stand-alone                     21,194 bytes
+
+Depending on your program, the speed difference could be virtually unnoticable
+(as in this case), or, if you have a large program with lots of loops and
+everything, it could be substantially slower.
+
+
+Now, I'll describe what all the numbers in the KEY/ON KEY commands refer to.
+Use this chart.  The numbers are BASIC scan codes.  For more help than this
+gives, refer to the QBasic/QuickBASIC/BASIC PDS/VBDOS/PowerBASIC help file.
+
+Scan Code   Corresponding Key
+=============================
+     4      CTRL
+   128      Extended Keys
+    46      C
+    32      NumLock
+    64      CapsLock
+
+   KEY 15, CHR$(4 + 128 + 32 + 64) + CHR$(70)
+   ON KEY(15) GOSUB NoBreak: KEY(15) ON
+   KEY 16, CHR$(4 + 128) + CHR$(70): ON KEY(16) GOSUB NoBreak: KEY(16) ON
+   KEY 17, CHR$(4 + 128 + 32) + CHR$(70): ON KEY(17) GOSUB NoBreak
+   KEY(17) ON: KEY 18, CHR$(4 + 128 + 64) + CHR$(70): ON KEY(18) GOSUB NoBreak
+   KEY(18) ON: KEY 19, CHR$(4) + CHR$(70): ON KEY(21) GOSUB NoBreak
+   KEY(21) ON: KEY 22, CHR$(4 + 64) + CHR$(70)
+   ON KEY(22) GOSUB NoBreak: KEY(22) ON: KEY 23, CHR$(4 + 32) + CHR$(46)
+   ON KEY(23) GOSUB NoBreak: KEY(23) ON: KEY 24, CHR$(4 + 64) + CHR$(46)
+   ON KEY(24) GOSUB NoBreak: KEY(24) ON
+   KEY 25, CHR$(4 + 32 + 64) + CHR$(46): ON KEY(25) GOSUB NoBreak: KEY(25) ON
+
+
+
+I am always available to answer your questions, comments, suggestion, etc.  I
+can be reached at one of the following locations:
+
+   Daniel Trimble
+   Powerware International
+   731 Montecillo Road
+   San Rafael, CA  94903-3135
+
+   or Email at EFVE25D@prodigy.com
+
+   Enjoy!

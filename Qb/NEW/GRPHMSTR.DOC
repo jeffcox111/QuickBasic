@@ -1,0 +1,566 @@
+
+		      GRAPHICS MASTER 256
+
+                     All routines (C) 1991
+ 			     	                      
+                         FRED SEXTON JR. 
+
+
+RELEASED AS SHAREWARE
+   That means it's not free and all rights are reserved by the 
+author.You may use these routines on a trial basis for 30 days.
+After which you must register your copy.Registration will allow 
+you to freely use the routines in any program you write.
+And will greatly encourage the author to create more routines
+(suggestions would be appreciated).These routines may be freely
+distributed as a complete package,provided they are not altered
+in anyway and this file is included.Please see the end of this 
+document for registration information.
+
+   The author makes no warranty for any damages arising from the 
+use or(more likely) the inabality to use,these routines.
+(must C.M.A.)
+
+   Virtual screens are used tocreate animation.For those of you who
+don't know ,a virtual screen is merely an area of memory that has
+the same dimensions as the physical screen.In mode 13 this is
+an array with 64000 bytes and is created simply by dimensioning
+an array. - DIM ary(31999) - The value used to dimension arrays
+is a word value (2 bytes) and by default arrays start at element
+"0".That's why 31999 instead of 32000.
+   Use of a virtual screen will allow constructing complex displays.
+With a background,a foreground and any number of sprites.The number
+of sprites will effect construction time.The virtual screen is then
+displayed while the next is constructed.These routines are as fast
+as possible,limited only by your computer.Please see the demo source
+code for more detailed information.
+
+ALL ROUTINES ASSUME STANDARD SCREEN 13 COORDINATES 
+ie.(0,0)top left-(319,199)bottom right
+
+ALL VALUES PASSED ARE ASSUMED AS INTEGERS (ie.16 bit word) 
+EXCEPT AS NOTED
+
+Some routines will modify varaibles passed,So if you use the 
+value elsewhere you might need to save a copy of the original.
+
+The standard QB get routine is used with dynamic integer arrays.
+
+To get a segment use VARSEG.To get an offset use VARPTR
+To get a string address use SADD.
+
+When QuickBasic allocates memory for arrays it uses segment 
+boundaries as a result element "0" will always have an offset
+of 0.So some routines don't require the offset to be passed.
+
+
+
+
+This document sould be printed 60 lines per page.
+
+
+aryset(aseg,aofs,value,words)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target 
+  bofs = offset of target 	
+  value = the desired word value - if byte level is desired simply 
+            create the appropriate word value - to put 10 in each
+	    byte use -> value = (256 * 10) + 10
+  words = the number of words to set
+>>Sets the specified number of words in an array to the specified 
+  value.
+
+clrvrt(aseg)
+  aseg = segment of virtual screen
+>>Clears a virtual screen.
+
+clsfile(handle)
+  handle = files handle (returned when the file is opened)
+>>Closes a previously opened file.
+   >>>> You must close all files before exiting your program
+        to guarantee their integrity.
+
+cngclr(aseg,aofs,clr,nclr,bytes&)
+  aseg = segment of array
+  aofs = offset of array 
+  clr = color value to search for (and change)
+  nclr = the new color value 
+  bytes& = LONG VALUE number of bytes to search
+>>Searches an array for a value and changes it to a new value.
+  (also see vcngclr,vcngclrs)
+
+cpyblk(aseg,aofs,bseg,bofs,words)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target
+  bofs = offset of target  
+  words = number of words to copy
+>>Copies the specified number of words from the source to the
+  target. 
+
+crfile(fstrloc,handle)
+  fstrloc = address (obtained by SADD) of an ASCIIZ string
+            - to create an ASCIIZ string simply add a CHR$(0)
+            to the end of a string
+            -aa$ = "filename.ext"+CHR$(0) >> fstrloc = SADD(aa$)  
+  handle = will return the handle of the file
+>>Creates a file with specified name (legal DOS name) and returns
+  the handle.The file is open for random access.
+
+dscrolloff(aseg)
+  aseg = segment of virtual screen
+>>Scrolls the existing screen down leaving the virtual screen
+  on the display.(SEE DEMO)
+  
+dscrollon(aseg)
+  aseg = segment of virtual screen
+>>Scrolls a virtual screen down over the existing screen.(SEE DEMO)
+
+
+
+explode(aseg)
+  aseg = segment of virtual screen
+>>Explodes a virtual screen from the center over the existing screen.
+  (SEE DEMO)
+
+fredload(ary(),flname$)
+  ary() = the target array (DIM anysize - will REDIM) 
+  flname$ = STRING VALUE name of file to load
+>>Loads a file previously saved by fredsave into the target.
+  (Uses an number of other routines including fredsuncrunch)
+
+fredsave(ary(),flname$)
+  ary() = the source array
+  flname$ = STRING name of file to save
+>>Saves an array in a compressed format to the specified file.
+  (Uses an number of other routines including fredscrunch)
+
+fredscrunch(aseg,aofs,bseg,bofs,bytes&)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target 
+  bofs = offset of target   
+  bytes& = LONG VALUE returns bytes used
+>>Compresses the source array into the target array returning
+  the number of bytes used in target.If zero is returned then
+  compression failed.
+  Requires two arrays both dimensioned to the same size.
+
+fredsuncrunch(aseg,aofs,bseg,bofs,bytes&)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target 
+  bofs = offset of target   
+  bytes& = LONG VALUE bytes to be used in target
+>>Uncompresses the source into the target.Must have been
+  compressed by fredscrunch.
+  Requires two arrays both dimensioned to the same size.
+
+getclr(clr,red,green,blue)
+  clr = the color to get
+  red = returns red value
+  green = returns green value
+  blue = returns blue value
+>>Returns the current intensity values for the specified color.
+
+getflpntr(handle,pntr&)
+  handle = the file handle
+  pntr& = LONG VALUE returns the current file pointer
+>>Returns the current pointer position for the specified file
+
+getpal(aseg,aofs)
+  aseg = segment of target
+  aofs = offset of target
+>>Returns 256 three byte sets corresponding to the intensity values
+  for the entire palette.Requires 768 bytes therefore use 
+  DIM ary(383).
+
+
+
+
+hclose(aseg)
+  aseg = segment of virtual screen
+>>Horizonally closes a virtual over the existing screen
+  starting from the center.(SEE DEMO)
+
+hclose2(aseg)
+  aseg = segment of virtual screen
+>>Horizonally closes a virtual over the existing screen
+  starting from two locations.(SEE DEMO)
+
+hclose4(aseg)
+  aseg = segment of virtual screen
+>>Horizonally closes a virtual over the existing screen
+  starting from four locations.(SEE DEMO)
+
+hclose8(aseg)
+  aseg = segment of virtual screen
+>>Horizonally closes open a virtual over the existing screen
+  starting from eight locations.(SEE DEMO)
+
+hopen(aseg)
+  aseg = segment of virtual screen
+>>Horizonally splits open a virtual over the existing screen
+  starting from the center.(SEE DEMO)
+
+hopen2(aseg)
+  aseg = segment of virtual screen
+>>Horizonally splits open a virtual over the existing screen
+  starting from two locations.(SEE DEMO)
+
+hopen4(aseg)
+  aseg = segment of virtual screen
+>>Horizonally splits open a virtual over the existing screen
+  starting from four locations.(SEE DEMO)
+
+hopen8(aseg)
+  aseg = segment of virtual screen
+>>Horizonally splits open a virtual over the existing screen
+  starting from eight locations.(SEE DEMO)
+
+hshake(aseg,times)
+  aseg = segment of virtual screen
+  times = number of shakes
+>>Shakes screen up and down the number of times specified.
+  Assumes the virtual screen is already displayed.
+
+implode(aseg)
+  aseg = segment of virtual screen
+>>Implodes a virtual screen over the existing screen.
+  (SEE DEMO)
+
+loadpal(flname$)
+  flname$ = STRING file name
+>>Sets the palette to the values in a previously saved palette file. 
+  (see savepal)
+
+
+
+
+
+lscrolloff(aseg)
+  aseg = segment of virtual screen
+>>Scrolls the existing screen left leaving the virtual screen
+  on the display.(SEE DEMO)
+
+lscrollon(aseg)
+  aseg = segment of virtual screen
+>>Scrolls a virtual screen left over the existing screen.(SEE DEMO)
+
+microdelay(delay&)
+  delay& = LONG VALUE length of delay in microseconds 
+>>Pauses execution the specified number of microseconds.(10^-6)
+
+mirror(aseg,aofs,bseg,bofs)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target 
+  bofs = offset of target 
+>>Returns in target a mirror image of source.(SEE DEMO)
+  Requires two arrays both dimensioned to the same size.
+
+opnfile(fstrloc,handle,bytes&)
+  fstrloc = address (obtained by SADD) of an ASCIIZ string
+            - to create an ASCIIZ string simply add a CHR$(0)
+            to the end of a string
+            -aa$ = "filename.ext"+CHR$(0) >> fstrloc = SADD(aa$)  
+  handle = will return the handle of the file  
+  bytes& = LONG VALUE will return file length in bytes
+>>Opens a file.Returns the handle and file length (in bytes).
+
+pandown(aseg)
+  aseg = segment of virtual
+>>Pans down to a virtual.
+
+panleft(aseg)
+  aseg = segment of virtual
+>>Pans left to a virtual.
+
+panright(aseg)
+  aseg = segment of virtual
+>>Pans right to a virtual.
+
+panup(aseg)
+  aseg = segment of virtual
+>>Pans up to a virtual.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+putback(aseg,aofs,bseg,bofs,x,y)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target (use &HA000 to write to screen)
+  bofs = offset of target (use 0 to write to screen)
+  x = x-axis position
+  y = y-axis position  
+>>Puts source array into target at position specified only where zeroes exist
+  in target.Effectively placing in background.(SEE DEMO)
+>>>> The values for x,y position can be such as to partially display
+     image.The image will be clipped at edges of screen(real or virtual).
+     EX.  A 50 by 50 image  would have legal x values of -49 to 319 and
+          legal y values of -49 to 199.
+     WARNING >> The x must always be <= 319 and never more negative
+		than the image width.The y must always be <=199 and
+		never more negative than the image height. 
+		(see legal values in example)
+		Failure to follow these rules will put the computer	
+		into an endless loop.
+
+putfront(aseg,aofs,bseg,bofs,x,y)
+  aseg = segment of source
+  aofs = offset of source
+  bseg = segment of target (use &HA000 to write to screen)
+  bofs = offset of target (use 0 to write to screen)
+  x = x-axis position 
+  y = y-axis position 
+>>Puts source array into target at position specified ignoring zeroes in 
+  source.Effectively placing in foreground.(SEE DEMO)
+>>>> The values for x,y position can be such as to partially display
+     image.The image will be clipped at edges of screen(real or virtual).
+     EX.  A 50 by 50 image  would have legal x values of -49 to 319 and
+          legal y values of -49 to 199.
+     WARNING>> The x must always be <= 319 and never more negative
+		than the image width.The y must always be <=199 and
+		never more negative than the image height. 
+		(see legal values in example)
+		Failure to follow these rules will put the computer
+		into an endless loop.Requiring a three finger salute.
+                (ctrl-alt-delete or reset)
+
+readimage(ary(),image)
+  ary() = the array to store image in
+  image = the number of the image in the file
+>>Reads an image from a previously opened "*.FCR" file to an array.
+  Array will be redimensioned to proper size.".FCR" file are created 
+  with Filemax.exe a utility free upon registration.
+
+rdfile(aseg,aofs,handle,bytes&,pntr&)
+  aseg = segment of target
+  aofs = offset of target
+  handle = file handle (returned when file was opened)
+  bytes& = LONG VALUE number of bytes to read
+  pntr& = LONG VALUE pointer position to start at
+>>Reads specified number of bytes from a file into target 
+  starting at file pointer specified.
+
+
+
+
+rscrolloff(aseg)
+  aseg = segment of virtual screen
+>>Scrolls the existing screen right leaving the virtual screen
+  on the display.(SEE DEMO)
+
+rscrollon(aseg)
+  aseg = segment of virtual screen
+>>Scrolls a virtual screen right over the existing screen.(SEE DEMO)
+
+savepal(flname$)
+  flname$ = STRING file name 
+>>Saves the existing palette to the specified file.
+
+scprint()
+  no parameters
+>>Prints the screen to an Epson printer.Uses grayscale of existing
+  palette to simulate a BW snapshot.
+
+scrn2vrt(aseg)
+  aseg = segment of virtual screen
+>>Copies the screen to a virtual screen.
+
+setclr(clr,red,green,blue)
+  clr = the color to set
+  red = returns red value
+  green = returns green value
+  blue = returns blue value
+>>Sets the intensity values for the specified color.
+
+setflpntr(handle,pntr&)
+  handle = the file handle
+  pntr& = LONG VALUE desired file pointer
+>>Sets the current pointer position for the specified file
+
+setpal(aseg,aofs)
+  aseg = segment of source
+  aofs = offset of source
+>>Sets the palette to the series of 256 three byte sets in the
+source.(See getpal)
+
+shtlft(x,times)
+  x = value to shift
+  times = number of shifts
+>>shifts a 16 bit word left the specified number of times
+  discards top bit (effectively multiplies by 2 each shift)
+
+shtrgt(x,times)
+  x = value to shift
+  times = number of shifts
+>>shifts a 16 bit word right the specified number of times
+  discards bottom bit (effectively divides by 2 each shift)
+
+unzoom(aseg,aofs)
+  aseg = segment of target
+  aofs = offset of target
+>>Unzooms the screen to the target(included because I wrote 
+  zoom and unzoom together in zoom.asm)
+
+
+
+uscrolloff(aseg)
+  aseg = segment of virtual screen
+>>Scrolls the existing screen up leaving the virtual screen
+  on the display.(SEE DEMO)
+
+uscrollon(aseg)
+  aseg = segment of virtual screen
+>>Scrolls a virtual screen up over the existing screen.(SEE DEMO)
+
+vclose(aseg)
+  aseg = segment of virtual screen
+>>Vertically closes a virtual over the existing screen
+  starting from the center.(SEE DEMO)
+
+vclose2(aseg)
+  aseg = segment of virtual screen
+>>Vertically closes a virtual over the existing screen
+  starting from two locations.(SEE DEMO)
+
+vclose4(aseg)
+  aseg = segment of virtual screen
+>>Vertically closes a virtual over the existing screen
+  starting from four locations.(SEE DEMO)
+
+vclose8(aseg)
+  aseg = segment of virtual screen
+>>Vertically closes a virtual over the existing screen
+  starting from eight locations.(SEE DEMO)
+
+vcngclr(aseg,color,newcolor)
+  aseg = segment of virtual screen (&HA000 for display)
+  color = color to change
+  newcolor = the color to change to
+>>Changes a specified color to a new color in a screen (virtual or real).
+
+vcngclrs(aseg,firstcolor,lastcolor,coloroffset)
+  aseg = segment of virtual screen (&HA000 for display)
+  firstcolor = first color in group to change (lowest attribute #)
+  lastcolor = last color in group to change (highest attribute #)
+>>Changes a group of colors to a new group of colors in a screen 
+  (virtual or real).The color offset is added to existing colors in 
+  specified group.(can be + or -)(SEE DEMO)
+
+vopen(aseg)
+  aseg = segment of virtual screen
+>>Vertically splits open a virtual over the existing screen
+  starting from the center.(SEE DEMO)
+
+vopen2(aseg)
+  aseg = segment of virtual screen
+>>Vertically splits open a virtual over the existing screen
+  starting from two locations.(SEE DEMO)
+
+vopen4(aseg)
+  aseg = segment of virtual screen
+>>Vertically splits open a virtual over the existing screen
+  starting from four locations.(SEE DEMO)
+
+
+
+vopen8(aseg)
+  aseg = segment of virtual screen
+>>Vertically splits open a virtual over the existing screen
+  starting from eight locations.(SEE DEMO)
+
+vrt2scrn(aseg)
+  aseg = segment of virtual screen
+>>Copies a virtual screen to the screen.
+
+vshake(aseg,times)
+  aseg = segment of virtual screen
+  times = number of shakes
+>>Shakes screen left and right the number of times specified.
+  Assumes the virtual screen is already displayed.
+
+wrtfile(aseg,aofs,handle,bytes&,pntr&)
+  aseg = segment of target
+  aofs = offset of target
+  handle = file handle (returned when file was opened)
+  bytes& = LONG VALUE number of bytes to write
+  pntr& = LONG VALUE returns starting pointer position 
+>>Writes specified number of bytes to a file from source.
+  Returns starting file pointer.(you'll need this to read it back)
+
+zoom(aseg,aofs)
+  aseg = segment of source
+  aofs = offset of element #2 of source
+>>Zooms an 160 X 100 image to fill entire screen.Array must be 
+DIM ary(8001) and you must pass the offset of element #2.
+EX. aofs = VARSEG(ary(2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Registration:
+
+Please send $30 to:
+
+			FRED SEXTON JR.
+			4460 Oakhills Blvd. #301
+			Lorain,OH 44053
+
+
+You'll recieve the lastest version of the "GRAPHICS MASTER 256"
+And the Shareware versions of:
+"THE SPRITE MASTER" a 256 color drawing program that uses
+                    many of these routines.(including fredsave)
+"THE PALETTE MASTER" an easy to use utility for creating and 
+		    saving palettes.
+
+Please specify disk size and capacity.(Add $2 for 3.5" disks)
+
+
+
+
+Any comments/suggestion would be appreciated.I can be reached at the 
+above address or via 
+COMPUSERVE - 70253,163  
+AMERICA ON LINE - member7408

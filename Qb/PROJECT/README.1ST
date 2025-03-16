@@ -1,0 +1,59 @@
+-------------------------------------
+BCRYPT VERSION 1.10
+-------------------------------------
+
+-------------------------------------
+Release Date:
+-------------------------------------
+
+Changes in this version:
+
+-   Many of the variable have been changed to avoid conflicting with
+    PB3.0 reserved keywords.  Please check your code carefully.
+
+-   Some of the routines have been moved to new OBJ files so that
+    commonality of the source between PDS , QB, and PB is maintained.
+    If you have created a custom LIB from BCRYPT this may change where
+    the routines are to be found.
+
+-   Some routines are not available yet for PB, these are indicated in
+    the documentation.
+
+Program notes:
+
+-   QB.LIB/QLB is compiled into BCRYPT4.LIB/QLB, therefore CALL
+    INTERRUPT is available.  However, this means that it is useable
+    only with QB 4.x.
+
+-   QBX.LIB/QLB is compiled into BCRYPT7.LIB/QLB, therefore CALL
+    INTERRUPT is available.  However, this means that it is useable
+    only with PDS7.x
+
+-   BCRYPT7.LIB/QLB is compiled for Far Strings/Emulator Math.  Near
+    String and or Coprocessor Math versions are available to
+    registered users.
+
+-   This LIB uses primarily string functions to accomplish it's work.
+    I plan on converting to use direct memory manipulation at some
+    point in the future.
+
+Usage Notes:
+
+-   Due to the use of string routines some routines may seem to be a
+    bit sluggish.  If the routine seems to slow for your intended use,
+    contact me and we will arrange for an updated version.
+
+-   If you come up with any neat or unusual code demonstrating this
+    library, please pass it on to me.  I'll use it in the next release
+    version <with proper credit to the authors(s) of course!>.
+
+Extra Credits:
+V1.00    Richard Vannoy  -  Inspiration for the XOR Routines
+         Rick Geldreich  -  LZ.x routines
+         Zack Jones      -  Beta Tester
+
+Thanks!
+
+Derek Lyons
+Mountain Bay Software
+
